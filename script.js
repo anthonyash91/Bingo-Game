@@ -6,35 +6,80 @@ columnO = document.querySelectorAll('.column-o'),
 newCard = document.querySelector('button')
 
 const generateCard = () => {
+	const numberSpans = document.querySelectorAll('span.number');
+
 	for (let i = 0; i < columnB.length; i++) {
 		let randomNum = Math.floor(Math.random() * (15 - 1 + 1)) + 1,
-		square = columnB[i];
-		square.innerText = randomNum;
+		square = columnB[i],
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number', 'hide');
+		bingoNum.innerText = randomNum;
+		square.appendChild(bingoNum);
+
+		setTimeout(() => {
+			bingoNum.classList.remove('hide');
+		}, 50)
 	}
 
 	for (let i = 0; i < columnI.length; i++) {
 		let randomNum = Math.floor(Math.random() * (30 - 16 + 1)) + 16,
-		square = columnI[i];
-		square.innerText = randomNum;
+		square = columnI[i],
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number', 'hide');
+		bingoNum.innerText = randomNum;
+		square.appendChild(bingoNum);
+
+		setTimeout(() => {
+			bingoNum.classList.remove('hide');
+		}, 50)
 	}
 
 	for (let i = 0; i < columnN.length; i++) {
 		let randomNum = Math.floor(Math.random() * (45 - 31 + 1)) + 31,
-		square = columnN[i];
-		square.innerText = randomNum;
+		square = columnN[i],
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number', 'hide');
+		bingoNum.innerText = randomNum;
+		square.appendChild(bingoNum);
+
+		setTimeout(() => {
+			bingoNum.classList.remove('hide');
+		}, 50)
 	}
 
 	for (let i = 0; i < columnG.length; i++) {
 		let randomNum = Math.floor(Math.random() * (60 - 46 + 1)) + 46,
-		square = columnG[i];
-		square.innerText = randomNum;
+		square = columnG[i],
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number', 'hide');
+		bingoNum.innerText = randomNum;
+		square.appendChild(bingoNum);
+
+		setTimeout(() => {
+			bingoNum.classList.remove('hide');
+		}, 50)
 	}
 
 	for (let i = 0; i < columnO.length; i++) {
 		let randomNum = Math.floor(Math.random() * (75 - 61 + 1)) + 61,
-		square = columnO[i];
-		square.innerText = randomNum;
+		square = columnO[i],
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number', 'hide');
+		bingoNum.innerText = randomNum;
+		square.appendChild(bingoNum);
+
+		setTimeout(() => {
+			bingoNum.classList.remove('hide');
+		}, 50)
 	}
+
+	numberSpans.forEach(element => {
+		element.classList.add('hide');
+
+		setTimeout(() => {
+			element.remove();
+		}, 500)
+	})
 }
 
 newCard.addEventListener('click', generateCard);
