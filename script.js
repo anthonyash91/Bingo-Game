@@ -86,7 +86,9 @@ const generateBoardNums = () => {
 		randomNum = columnONums[randomizeNums],
 		removeRandomNum = columnONums.indexOf(randomNum);
 		columnONums.splice(removeRandomNum, 1);
-		
+		bingoNum = document.createElement('span');
+		bingoNum.classList.add('number');
+		bingoNum.innerText = randomNum;
 		columnO[i].appendChild(bingoNum);
 		columnO[i].classList.add('hide')
 		columnO[i].setAttribute('data', `O${randomNum}`);
