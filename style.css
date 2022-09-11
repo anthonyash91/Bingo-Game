@@ -35,19 +35,30 @@ body {
 }
 
 .square {
+	height: 84px;
+	width: 84px;
 	align-items: center;
 	background-color: #333;
 	border: 1px solid rgba(0,0,0,.1);
 	border-radius: 4px;
-	color: #fff;
 	display: flex;
 	font-family: "Durian Days";
 	font-size: 30px;
 	justify-content: center;
 	letter-spacing: 1px;
 	position: relative;
-	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
+	transition: .2s ease-in-out;
 	user-select: none;
+}
+
+.square.hide-number {
+	color: rgba(255,255,255,0);
+	text-shadow: 1px 1px 1px rgba(0,0,0,0);
+}
+
+.square.show-number {
+	color: rgba(255,255,255,1);
+	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
 }
 
 .square::after {
@@ -67,15 +78,6 @@ body {
 	opacity: .5;
 	transform: scale(3);
 	visibility: visible;
-}
-
-span.number {
-	position: absolute;
-	transition: .3s ease-in-out;
-}
-
-.hide span.number {
-	opacity: 0;
 }
 
 #card-button {
