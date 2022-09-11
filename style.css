@@ -84,3 +84,8 @@ body {
 	margin-top: 30px;
 	text-align: center;
 }
+
+#winning-number {
+	overflow: hidden;
+	width: 200px;
+}
