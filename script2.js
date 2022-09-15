@@ -89,7 +89,7 @@ const generateCards = () => {
 
 	setTimeout(() => {
 		tiles.forEach(element => {			
-			if(element.classList.contains('free-tile')){
+			if(element.classList.contains('free-tile')) {
 				element.classList.add('hit');
 			}
 		})
@@ -105,7 +105,7 @@ const pickWinningNum = () => {
 	winningNumbers.splice(winningNumbers.indexOf(winningNumbers[randomizeWinningNumbers]), 1);
 	newNumber.classList.add('winning-numbers', 'hide', winningNumber);
 
-	if(newNumber.classList.contains(winningNumber) && player.classList.contains(winningNumber)){
+	if(newNumber.classList.contains(winningNumber) && player.classList.contains(winningNumber)) {
 		newNumber.classList.add('color-one');
 	} else if(newNumber.classList.contains(winningNumber) && computer.classList.contains(winningNumber)) {
 		newNumber.classList.add('color-two');
@@ -125,18 +125,24 @@ const pickWinningNum = () => {
 	}
 
 	// logic for auto dabbing card
-	setTimeout(() => {
+	
 		if(autoplay){
-			tiles.forEach(element => {
-				if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
-					element.classList.add('hit');
-				}
-			})
+			setTimeout(() => {
+				tiles.forEach(element => {
+					if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
+						element.classList.add('hit');
+					}
+				})
+
+				checkForWinners();
+			}, 500)
 		} else {
 			computerTiles.forEach(element => {
 				if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
 					element.classList.add('hit');
 				}
+
+				checkForWinners();
 			})
 
 			tiles.forEach(element => {
@@ -148,18 +154,15 @@ const pickWinningNum = () => {
 					element.style.cursor = 'default';
 				})
 			})
-		}
 
-		checkForWinners();
-	}, 500)
+			player.addEventListener('click', (evt) => {
+				if(evt.target.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)) {
+					evt.target.classList.add('hit');
+				}
 	
-	player.addEventListener('click', (evt) => {
-		if(evt.target.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)) {
-			evt.target.classList.add('hit');
+				checkForWinners();
+			})
 		}
-
-		checkForWinners();
-	})
 }
 
 chooseWinningNumberButton.addEventListener('click', pickWinningNum);
@@ -215,6 +218,7 @@ const checkForWinners = () => {
 			playerWinningConditions[i].forEach(element => {
 				element.classList.add('winner');
 			})
+
 			playerWins = true;
 		}
 	}
@@ -224,35 +228,40 @@ const checkForWinners = () => {
 			computerWinningConditions[i].forEach(element => {
 				element.classList.add('winner');
 			})
+
 			computerWins = true;
 		}
 	}
 	
-	if(playerWins || computerWins){
+	if(playerWins || computerWins) {
 		chooseNumbersDiv.classList.add('hide');
 	}
 
-	if(playerWins){
+	if(playerWins) {
 		computer.style.transform = 'rotate(10deg)';
 		computerTiles.forEach((element, i) => {
-			if(loserCounter === 5){
+			if(loserCounter === 5) {
 				loserCounter = 0;
 			}
 			element.innerText = loser[loserCounter];
 			loserCounter++
 		})
+
 		document.querySelector('#computer .player-name span').innerText = loser.join('');
 	}
 
-	if(computerWins){
+	if(computerWins) {
 		player.style.transform = 'rotate(-10deg)';
+		
 		playerTiles.forEach((element, i) => {
-			if(loserCounter === 5){
+			if(loserCounter === 5) {
 				loserCounter = 0;
 			}
+
 			element.innerText = loser[loserCounter];
 			loserCounter++
 		})
+
 		document.querySelector('#player .player-name span').innerText = loser.join('');
 	}
 }
