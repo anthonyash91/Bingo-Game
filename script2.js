@@ -215,7 +215,6 @@ const checkForWinners = () => {
 			playerWinningConditions[i].forEach(element => {
 				element.classList.add('winner');
 			})
-
 			playerWins = true;
 		}
 	}
@@ -225,7 +224,6 @@ const checkForWinners = () => {
 			computerWinningConditions[i].forEach(element => {
 				element.classList.add('winner');
 			})
-
 			computerWins = true;
 		}
 	}
@@ -236,31 +234,25 @@ const checkForWinners = () => {
 
 	if(playerWins){
 		computer.style.transform = 'rotate(10deg)';
-		
 		computerTiles.forEach((element, i) => {
 			if(loserCounter === 5){
-				loserCounter = 0
+				loserCounter = 0;
 			}
-
 			element.innerText = loser[loserCounter];
 			loserCounter++
 		})
-
 		document.querySelector('#computer .player-name span').innerText = loser.join('');
 	}
 
 	if(computerWins){
 		player.style.transform = 'rotate(-10deg)';
-		
 		playerTiles.forEach((element, i) => {
 			if(loserCounter === 5){
-				loserCounter = 0
+				loserCounter = 0;
 			}
-
 			element.innerText = loser[loserCounter];
 			loserCounter++
 		})
-
 		document.querySelector('#player .player-name span').innerText = loser.join('');
 	}
 }
