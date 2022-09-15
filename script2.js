@@ -1,6 +1,39 @@
-const tiles = document.querySelectorAll('.square');
+const tiles = document.querySelectorAll('.tile'),
+			computerTiles = document.querySelectorAll('#computer .tile'),
+			player = document.getElementById('player'),
+			computer = document.getElementById('computer'),
+			generateCardsButton = document.querySelector('.generate-cards')
+
 // this will count up by 1 each time a tile is iterated over; this is is used to determine which array inside the bingoNumbers object to use when choosing a random number and placing it into a tile
+
+let winningNumbers = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75'];
+
+let chosenNums = [];
 let tileCounter = 0;
+
+setTimeout(() => {
+	const w = document.querySelectorAll('.bingo-card');
+
+	w.forEach(element => {
+		element.classList.remove('start');
+	})
+}, 800)
+
+setTimeout(() => {
+	const x = document.querySelectorAll('.player-name span');
+
+	x.forEach(element => {
+		element.classList.replace('hide', 'show')
+	})
+}, 1000)
+
+setTimeout(() => {
+	const y = document.querySelectorAll('.player-name');
+
+	y.forEach(element => {
+		element.classList.add('extend')
+	})
+}, 1400)
 
 const generateCards = () => {
 	const bingoNumbers = {
@@ -16,28 +49,170 @@ const generateCards = () => {
 
 	// iterate over every tile
 	tiles.forEach((element, i) => {
-		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
-		element.classList.contains('header-square') && i++;
-		element.classList.contains('free-spot') && i++;
-
-		// get the data-letter attribute from each tile; this will be used for "marking" a tile once a winning number is picked
-		let letter = element.getAttribute('data-letter');
 		// iterate through the correct array in the bingoNumbers object; bingoNumbers = the object; bingoLetters = use the keys inside the bingoNumbers object; tileCounter = the index of the key inside the object (0 = b, 1 = i, 2 = n, 3 = g, 4 = o)
 		let bingoNumbersArray = bingoNumbers[bingoLetters[tileCounter]];
 		// randomize the numbers in the correct array in the bingoNumbers object
 		let randomizeArrayNumbers = Math.floor(Math.random() * bingoNumbersArray.length);
 		// select a random number from the current array in the bingoNumbers object
 		let pickNum = bingoNumbersArray[randomizeArrayNumbers];
+		let randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
 		// remove the number just selected from the current array so it can't be picked again in the next row
 		bingoNumbersArray.splice(bingoNumbersArray.indexOf(bingoNumbersArray[randomizeArrayNumbers]), 1);
-		
+
+		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
+		element.classList.contains('header-tile') && i++;
+		element.classList.contains('free-tile') && i++;
+
+		element.classList.replace('show-number', 'hide-number');
+
+		setTimeout(() => {
+			element.classList.replace('hide-number', 'show-number');
+		}, randomFade)
+
+		if(!element.classList.contains('header-tile') && !element.classList.contains('free-tile')) {
+			setTimeout(() => {
+				element.innerText = pickNum;
+			}, 200)
+
+			element.setAttribute('data', bingoLetters[tileCounter].toUpperCase() + pickNum);
+			element.parentElement.parentElement.classList.add(bingoLetters[tileCounter].toUpperCase() + pickNum)
+		}
+
 		// add 1 to the tile counter for every square iterated over (with the exceptions noted)
 		tileCounter++
 		// once the tile counter hits 5 (the amount of tiles in a row), restart the tile counter; the current tileCounter number is what dictates from which array in the bingoNumbers object to pull a number
 		5 === tileCounter && (tileCounter = 0);
 		// only place a number into the tile being iterated over if that tile does not contain a class of 'header-square' or 'free-spot', then add a data attribute that consists of the column letter and the tile's number; this will be used for "marking" the tile once a winning number is called
-		element.classList.contains('header-square') || element.classList.contains('free-spot') || (element.innerText = pickNum, element.setAttribute('data', letter + pickNum));
 	})
+
+	document.querySelector('.choose-winning-number').classList.replace('hide', 'show');
+	document.querySelector('.generate-cards').classList.add('hide');
+
+	setTimeout(() => {
+		tiles.forEach(element => {			
+			if(element.classList.contains('free-tile')){
+				element.classList.add('hit');
+			}
+		})
+	}, 500)
 }
 
-document.querySelector('.generate-card').addEventListener('click', generateCards);
+generateCardsButton.addEventListener('click', generateCards);
+
+const pickWinningNum = () => {
+	let randomizeWinningNumbers = Math.floor(Math.random() * winningNumbers.length);
+	let winningNumber = winningNumbers[randomizeWinningNumbers];
+	winningNumbers.splice(winningNumbers.indexOf(winningNumbers[randomizeWinningNumbers]), 1);
+
+  let newSpan = document.createElement('div');
+	newSpan.classList.add('winning-numbers', 'hide', winningNumber);
+
+	if(newSpan.classList.contains(winningNumber) && player.classList.contains(winningNumber)){
+		newSpan.classList.add('color-one');
+	} else if(newSpan.classList.contains(winningNumber) && computer.classList.contains(winningNumber)) {
+		newSpan.classList.add('color-two');
+	} else {
+		newSpan.classList.add('color-three');
+	}
+
+	newSpan.innerHTML = `${winningNumber}`;
+
+  if(chosenNums.length != 75){
+    setTimeout(() => {
+      newSpan.classList.replace('hide', 'show')  
+    },200)
+
+    document.getElementById('winning-number').prepend(newSpan)
+    chosenNums.push(winningNumber);
+  }
+
+  // logic for auto dabbing card
+	setTimeout(() => {
+		computerTiles.forEach(element => {
+			if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
+				element.classList.add('hit');
+			}
+		})
+
+		checkForWinners();
+	}, 500)
+}
+
+document.querySelector('.choose-winning-number').addEventListener('click', pickWinningNum);
+
+let playerWins = false;
+let computerWins = false;
+
+const checkForWinners = () => {
+	let playerWinningConditions = [
+		// horizontal
+		[tiles[5],tiles[6],tiles[7],tiles[8],tiles[9]],
+		[tiles[10],tiles[11],tiles[12],tiles[13],tiles[14]],
+		[tiles[15],tiles[16],tiles[17],tiles[18],tiles[19]],
+		[tiles[20],tiles[21],tiles[22],tiles[23],tiles[24]],
+		[tiles[25],tiles[26],tiles[27],tiles[28],tiles[29]],
+		// four corners
+		[tiles[5],tiles[9],tiles[17],tiles[25],tiles[29]],
+		// vertical
+		[tiles[5],tiles[10],tiles[15],tiles[20],tiles[25]],
+		[tiles[6],tiles[11],tiles[16],tiles[21],tiles[26]],
+		[tiles[7],tiles[12],tiles[17],tiles[22],tiles[27]],
+		[tiles[8],tiles[13],tiles[18],tiles[23],tiles[28]],
+		[tiles[9],tiles[14],tiles[19],tiles[24],tiles[29]],
+		// diagonol
+		[tiles[5],tiles[11],tiles[17],tiles[23],tiles[29]],
+		[tiles[9],tiles[13],tiles[17],tiles[21],tiles[25]]
+	]
+
+	let computerWinningConditions = [
+		// horizontal
+		[tiles[35],tiles[36],tiles[37],tiles[38],tiles[39]],
+		[tiles[40],tiles[41],tiles[42],tiles[43],tiles[44]],
+		[tiles[45],tiles[46],tiles[47],tiles[48],tiles[49]],
+		[tiles[50],tiles[51],tiles[52],tiles[53],tiles[54]],
+		[tiles[55],tiles[56],tiles[57],tiles[58],tiles[59]],
+		// four corners
+		[tiles[35],tiles[39],tiles[47],tiles[55],tiles[59]],
+		// vertical
+		[tiles[35],tiles[40],tiles[45],tiles[50],tiles[55]],
+		[tiles[36],tiles[41],tiles[46],tiles[51],tiles[56]],
+		[tiles[37],tiles[42],tiles[47],tiles[52],tiles[57]],
+		[tiles[38],tiles[43],tiles[48],tiles[53],tiles[58]],
+		[tiles[39],tiles[44],tiles[49],tiles[54],tiles[59]],
+		// diagonal
+		[tiles[35],tiles[41],tiles[47],tiles[53],tiles[59]],
+		[tiles[39],tiles[43],tiles[47],tiles[51],tiles[55]]
+	]
+
+	for(let i = 0; i < playerWinningConditions.length; i++) {
+		if(playerWinningConditions[i][0].classList.contains('hit') && playerWinningConditions[i][1].classList.contains('hit') && playerWinningConditions[i][2].classList.contains('hit') && playerWinningConditions[i][3].classList.contains('hit') && playerWinningConditions[i][4].classList.contains('hit')) {
+			playerWinningConditions[i].forEach(element => {
+				element.classList.add('winner');
+			})
+
+			playerWins = true;
+		}
+	}
+
+	for(let i = 0; i < computerWinningConditions.length; i++) {
+		if(computerWinningConditions[i][0].classList.contains('hit') && computerWinningConditions[i][1].classList.contains('hit') && computerWinningConditions[i][2].classList.contains('hit') && computerWinningConditions[i][3].classList.contains('hit') && computerWinningConditions[i][4].classList.contains('hit')) {
+			computerWinningConditions[i].forEach(element => {
+				element.classList.add('winner');
+			})
+
+			computerWins = true;
+		}
+	}
+	
+	if(playerWins || computerWins){
+		
+	}
+
+	if(playerWins){
+		
+	}
+
+	if(computerWins){
+		
+	}
+}
