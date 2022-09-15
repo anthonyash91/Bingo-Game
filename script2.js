@@ -13,9 +13,7 @@ chooseNumbersDiv = document.getElementById('choose-numbers'),
 chooseWinningNumberButton = document.querySelector('.choose-winning-number');
 
 let autoplay = false;
-
 let winningNumbers = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75'];
-
 let chosenNums = [];
 // this will count up by 1 each time a tile is iterated over; this is is used to determine which array inside the bingoNumbers object to use when choosing a random number and placing it into a tile
 let tileCounter = 0;
@@ -61,7 +59,6 @@ const generateCards = () => {
 		const randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
 		// remove the number just selected from the current array so it can't be picked again in the next row
 		bingoNumbersArray.splice(bingoNumbersArray.indexOf(bingoNumbersArray[randomizeArrayNumbers]), 1);
-
 		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
 		element.classList.contains('header-tile') && i++;
 		element.classList.contains('free-tile') && i++;
@@ -104,9 +101,8 @@ generateCardsButton.addEventListener('click', generateCards);
 const pickWinningNum = () => {
 	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbers.length);
 	const winningNumber = winningNumbers[randomizeWinningNumbers];
+	const newNumber = document.createElement('div');
 	winningNumbers.splice(winningNumbers.indexOf(winningNumbers[randomizeWinningNumbers]), 1);
-
-  const newNumber = document.createElement('div');
 	newNumber.classList.add('winning-numbers', 'hide', winningNumber);
 
 	if(newNumber.classList.contains(winningNumber) && player.classList.contains(winningNumber)){
