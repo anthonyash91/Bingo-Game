@@ -1,8 +1,18 @@
 const tiles = document.querySelectorAll('.tile'),
+			playerHeaderTiles = document.querySelectorAll('#player .header-tile'),
 			computerTiles = document.querySelectorAll('#computer .tile'),
+			playerTiles = document.querySelectorAll('#player .tile'),
 			player = document.getElementById('player'),
 			computer = document.getElementById('computer'),
-			generateCardsButton = document.querySelector('.generate-cards')
+			generateCardsButton = document.querySelector('.generate-cards'),
+			bingoCards = document.querySelectorAll('.bingo-card'),
+			playerNames = document.querySelectorAll('.player-name'),
+			playerNameSpans = document.querySelectorAll('.player-name span'),
+			winningNumbersDiv = document.getElementById('winning-number'),
+			chooseNumbersDiv = document.getElementById('choose-numbers'),
+			chooseWinningNumberButton = document.querySelector('.choose-winning-number');
+
+let autoplay = false;
 
 // this will count up by 1 each time a tile is iterated over; this is is used to determine which array inside the bingoNumbers object to use when choosing a random number and placing it into a tile
 
@@ -12,25 +22,19 @@ let chosenNums = [];
 let tileCounter = 0;
 
 setTimeout(() => {
-	const w = document.querySelectorAll('.bingo-card');
-
-	w.forEach(element => {
+	bingoCards.forEach(element => {
 		element.classList.remove('start');
 	})
 }, 800)
 
 setTimeout(() => {
-	const x = document.querySelectorAll('.player-name span');
-
-	x.forEach(element => {
+	playerNameSpans.forEach(element => {
 		element.classList.replace('hide', 'show')
 	})
 }, 1000)
 
 setTimeout(() => {
-	const y = document.querySelectorAll('.player-name');
-
-	y.forEach(element => {
+	playerNames.forEach(element => {
 		element.classList.add('extend')
 	})
 }, 1400)
@@ -50,19 +54,18 @@ const generateCards = () => {
 	// iterate over every tile
 	tiles.forEach((element, i) => {
 		// iterate through the correct array in the bingoNumbers object; bingoNumbers = the object; bingoLetters = use the keys inside the bingoNumbers object; tileCounter = the index of the key inside the object (0 = b, 1 = i, 2 = n, 3 = g, 4 = o)
-		let bingoNumbersArray = bingoNumbers[bingoLetters[tileCounter]];
+		const bingoNumbersArray = bingoNumbers[bingoLetters[tileCounter]];
 		// randomize the numbers in the correct array in the bingoNumbers object
-		let randomizeArrayNumbers = Math.floor(Math.random() * bingoNumbersArray.length);
+		const randomizeArrayNumbers = Math.floor(Math.random() * bingoNumbersArray.length);
 		// select a random number from the current array in the bingoNumbers object
-		let pickNum = bingoNumbersArray[randomizeArrayNumbers];
-		let randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
+		const pickNum = bingoNumbersArray[randomizeArrayNumbers];
+		const randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
 		// remove the number just selected from the current array so it can't be picked again in the next row
 		bingoNumbersArray.splice(bingoNumbersArray.indexOf(bingoNumbersArray[randomizeArrayNumbers]), 1);
 
 		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
 		element.classList.contains('header-tile') && i++;
 		element.classList.contains('free-tile') && i++;
-
 		element.classList.replace('show-number', 'hide-number');
 
 		setTimeout(() => {
@@ -85,7 +88,7 @@ const generateCards = () => {
 		// only place a number into the tile being iterated over if that tile does not contain a class of 'header-square' or 'free-spot', then add a data attribute that consists of the column letter and the tile's number; this will be used for "marking" the tile once a winning number is called
 	})
 
-	document.querySelector('.choose-winning-number').classList.replace('hide', 'show');
+	chooseWinningNumberButton.classList.replace('hide', 'show');
 	document.querySelector('.generate-cards').classList.add('hide');
 
 	setTimeout(() => {
@@ -100,51 +103,75 @@ const generateCards = () => {
 generateCardsButton.addEventListener('click', generateCards);
 
 const pickWinningNum = () => {
-	let randomizeWinningNumbers = Math.floor(Math.random() * winningNumbers.length);
-	let winningNumber = winningNumbers[randomizeWinningNumbers];
+	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbers.length);
+	const winningNumber = winningNumbers[randomizeWinningNumbers];
 	winningNumbers.splice(winningNumbers.indexOf(winningNumbers[randomizeWinningNumbers]), 1);
 
-  let newSpan = document.createElement('div');
-	newSpan.classList.add('winning-numbers', 'hide', winningNumber);
+  const newNumber = document.createElement('div');
+	newNumber.classList.add('winning-numbers', 'hide', winningNumber);
 
-	if(newSpan.classList.contains(winningNumber) && player.classList.contains(winningNumber)){
-		newSpan.classList.add('color-one');
-	} else if(newSpan.classList.contains(winningNumber) && computer.classList.contains(winningNumber)) {
-		newSpan.classList.add('color-two');
+	if(newNumber.classList.contains(winningNumber) && player.classList.contains(winningNumber)){
+		newNumber.classList.add('color-one');
+	} else if(newNumber.classList.contains(winningNumber) && computer.classList.contains(winningNumber)) {
+		newNumber.classList.add('color-two');
 	} else {
-		newSpan.classList.add('color-three');
+		newNumber.classList.add('color-three');
 	}
 
-	newSpan.innerHTML = `${winningNumber}`;
+	newNumber.innerHTML = `${winningNumber}`;
 
   if(chosenNums.length != 75){
     setTimeout(() => {
-      newSpan.classList.replace('hide', 'show')  
+      newNumber.classList.replace('hide', 'show')  
     },200)
 
-    document.getElementById('winning-number').prepend(newSpan)
+    winningNumbersDiv.prepend(newNumber);
     chosenNums.push(winningNumber);
   }
 
   // logic for auto dabbing card
 	setTimeout(() => {
-		computerTiles.forEach(element => {
-			if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
-				element.classList.add('hit');
-			}
-		})
+		if(autoplay){
+			tiles.forEach(element => {
+				if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
+					element.classList.add('hit');
+				}
+			})
+		} else {
+			computerTiles.forEach(element => {
+				if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)){
+					element.classList.add('hit');
+				}
+			})
+
+			tiles.forEach(element => {
+				if(element.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber) && !element.classList.contains('hit')) {
+					element.style.cursor = 'pointer';
+				}
+
+				element.addEventListener('click', (evt) => {
+					element.style.cursor = 'default';
+				})
+			})
+		}
 
 		checkForWinners();
 	}, 500)
+	
+	player.addEventListener('click', (evt) => {
+		if(evt.target.getAttribute('data') === winningNumber && chosenNums.includes(winningNumber)) {
+			evt.target.classList.add('hit');
+		}
+
+		checkForWinners();
+	})
 }
 
-document.querySelector('.choose-winning-number').addEventListener('click', pickWinningNum);
-
-let playerWins = false;
-let computerWins = false;
+chooseWinningNumberButton.addEventListener('click', pickWinningNum);
 
 const checkForWinners = () => {
-	let playerWinningConditions = [
+	const loser = ['l','o','s','e','r'];
+	const playerWinningConditions = [
 		// horizontal
 		[tiles[5],tiles[6],tiles[7],tiles[8],tiles[9]],
 		[tiles[10],tiles[11],tiles[12],tiles[13],tiles[14]],
@@ -164,7 +191,7 @@ const checkForWinners = () => {
 		[tiles[9],tiles[13],tiles[17],tiles[21],tiles[25]]
 	]
 
-	let computerWinningConditions = [
+	const computerWinningConditions = [
 		// horizontal
 		[tiles[35],tiles[36],tiles[37],tiles[38],tiles[39]],
 		[tiles[40],tiles[41],tiles[42],tiles[43],tiles[44]],
@@ -183,6 +210,10 @@ const checkForWinners = () => {
 		[tiles[35],tiles[41],tiles[47],tiles[53],tiles[59]],
 		[tiles[39],tiles[43],tiles[47],tiles[51],tiles[55]]
 	]
+
+	let playerWins = false;
+	let computerWins = false;
+	let loserCounter = 0;
 
 	for(let i = 0; i < playerWinningConditions.length; i++) {
 		if(playerWinningConditions[i][0].classList.contains('hit') && playerWinningConditions[i][1].classList.contains('hit') && playerWinningConditions[i][2].classList.contains('hit') && playerWinningConditions[i][3].classList.contains('hit') && playerWinningConditions[i][4].classList.contains('hit')) {
@@ -205,14 +236,40 @@ const checkForWinners = () => {
 	}
 	
 	if(playerWins || computerWins){
-		
+		chooseNumbersDiv.classList.add('hide');
 	}
 
 	if(playerWins){
+		computer.style.transform = 'rotate(10deg)';
 		
+		computerTiles.forEach((element, i) => {
+			if(loserCounter === 5){
+				loserCounter = 0
+			}
+
+			element.innerText = loser[loserCounter];
+			loserCounter++
+		})
+
+		document.querySelector('#computer .player-name span').innerText = loser.join('');
 	}
 
 	if(computerWins){
+		player.style.transform = 'rotate(-10deg)';
 		
+		playerTiles.forEach((element, i) => {
+			if(loserCounter === 5){
+				loserCounter = 0
+			}
+
+			element.innerText = loser[loserCounter];
+			loserCounter++
+		})
+
+		document.querySelector('#player .player-name span').innerText = loser.join('');
 	}
 }
+
+document.querySelector('button.auto').addEventListener('click', () => {
+	autoplay = true;
+})
