@@ -115,16 +115,16 @@ const pickWinningNum = () => {
 
 	newNumber.innerHTML = `${winningNumber}`;
 
-  if(chosenNums.length != 75){
-    setTimeout(() => {
-      newNumber.classList.replace('hide', 'show')  
-    },200)
+	if(chosenNums.length != 75){
+		setTimeout(() => {
+			newNumber.classList.replace('hide', 'show')  
+		},200)
 
-    winningNumbersDiv.prepend(newNumber);
-    chosenNums.push(winningNumber);
-  }
+		winningNumbersDiv.prepend(newNumber);
+		chosenNums.push(winningNumber);
+	}
 
-  // logic for auto dabbing card
+	// logic for auto dabbing card
 	setTimeout(() => {
 		if(autoplay){
 			tiles.forEach(element => {
