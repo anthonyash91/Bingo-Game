@@ -5,19 +5,13 @@ allTiles = document.querySelectorAll('.tile'),
 playerTiles = document.querySelectorAll('#player-card .tile'),
 computerTiles = document.querySelectorAll('#computer-card .tile'),
 freeTiles = document.querySelectorAll('.free-tile'),
-playerFreeTile = document.querySelector('#player-card .free-tile'),
-computerFreeTile = document.querySelector('#bingo-card .free-tile'),
-playerHeaderTiles = document.querySelectorAll('#player-card .header-tile'),
-computerHeaderTiles = document.querySelectorAll('#computer-card .header-tile'),
 gameTiles = document.querySelectorAll('.game-tiles .tile'),
 names = document.querySelectorAll('.name'),
 playerName = document.querySelector('#player-card .name span'),
 autoMarkButton = document.querySelector('#auto-mark input'),
 winningNumbersContainer = document.getElementById('winning-numbers'),
-allWinningNumbers = document.querySelectorAll('.number'),
 generateCardsButton = document.getElementById('generate-cards'),
 drawANumberButton = document.getElementById('draw-a-number'),
-colorOne = document.querySelectorAll('.color-one'),
 resetGameButton = document.getElementById('reset-game'),
 blur = document.getElementById('blur'),
 modalOne = document.getElementById('modal-one'),
@@ -35,8 +29,8 @@ playerWins = false,
 computerWins = false,
 loserCounter = 0;
 
-getStartedButton.addEventListener('click', (evt) => {
-	modalOne.classList.add('hide');
+const startGame = () => {
+  modalOne.classList.add('hide');
 
 	setTimeout(() => {
 		modalOne.style.opacity = 0;
@@ -44,7 +38,8 @@ getStartedButton.addEventListener('click', (evt) => {
 	}, 600);
 
 	setTimeout(() => {modalTwo.classList.remove('hide');}, 800);
-})
+}
+
 
 nameInput.addEventListener('keypress', (evt) => {
 	if (evt.key === 'Enter') {
@@ -130,7 +125,7 @@ const checkForWinners = () => {
 	}
 	
 	if(playerWins || computerWins) {
-		drawANumberButton.classList.add('hide'); 
+		drawANumberButton.classList.add('hide');
 		resetGameButton.classList.remove('hide');
 		winningNumbersContainer.classList.add('hide');
 		document.getElementById('gradient').classList.add('hide');
@@ -148,17 +143,17 @@ const checkForWinners = () => {
 }
 
 
-
-// automark button
-autoMarkButton.addEventListener('click', (evt) => {
-	if(autoplay === false) {
+const auto = () => {
+  if(autoplay === false) {
 		autoplay = true;
 
-		allTiles.forEach(element => {
-			if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
-				element.classList.add('hit');
-			}
-		})
+    setTimeout(() => {
+      allTiles.forEach(element => {
+        if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
+          element.classList.add('hit');
+        }
+      })
+    }, 400)
 
 		document.querySelector('#label svg').classList.add('hide');
 		document.querySelector('#label-message').classList.add('hide');
@@ -168,12 +163,11 @@ autoMarkButton.addEventListener('click', (evt) => {
 		document.querySelector('#label svg').classList.remove('hide');
 		document.querySelector('#label-message').classList.remove('hide');
 	}
-})
+}
 
 
-// generate cards button
-generateCardsButton.addEventListener('click', (evt) => {
-	let bingoNumbers = {
+const pickAWinner = () => {
+  let bingoNumbers = {
 		b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
 		i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
 		n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
@@ -199,9 +193,7 @@ generateCardsButton.addEventListener('click', (evt) => {
 		element.classList.contains('free-tile') && i++;
 		element.classList.replace('show', 'hide');
 	
-		setTimeout(() => {
-			element.classList.replace('hide', 'show');
-		}, randomFade)
+		setTimeout(() => {element.classList.replace('hide', 'show');}, randomFade);
 
 		if(!element.classList.contains('header-tile') && !element.classList.contains('free-tile')) {
 			setTimeout(() => {
@@ -244,13 +236,12 @@ generateCardsButton.addEventListener('click', (evt) => {
 	winningNumbersContainer.classList.remove('hide');
 	generateCardsButton.classList.add('hide');
 	drawANumberButton.classList.remove('hide');
-})
+}
 
 
 
-// draw a number button
-drawANumberButton.addEventListener('click', (evt) => {
-	// choose a random number from the winningNumbers array
+const drawNumber = () => {
+  // choose a random number from the winningNumbers array
 	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbersArray.length);
 	const randomWinningNumber = winningNumbersArray[randomizeWinningNumbers];
 	const numberSpan = `<span>${randomWinningNumber.charAt(0)}</span>${randomWinningNumber.slice(1)}`;
@@ -261,19 +252,9 @@ drawANumberButton.addEventListener('click', (evt) => {
 		div.classList.add('number', randomWinningNumber);	
 		div.innerHTML = numberSpan;
 
-		if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add('color-one');
-		} else if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add('color-two');
-		} else if(div.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add('color-three');
-		} else {
-			div.classList.add('color-four');
-		}
+    div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-one") : div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-two") : div.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-three") : div.classList.add("color-four");
 
-		setTimeout(() => {
-			div.classList.add('show');
-		}, 100)
+		setTimeout(() => {div.classList.add('show');}, 100);
 
 		winningNumbersContainer.prepend(div);
 		// once a number is picked from the winningNumbers array, remove it from the array so it cannot be picked again
@@ -313,13 +294,10 @@ drawANumberButton.addEventListener('click', (evt) => {
 			}
 		})
 	}
-})
+}
 
-
-
-// reset button
-resetGameButton.addEventListener('click', (evt) => {
-	// push the numbers in the chosenWinningsNumbers array back into the winningNumbers array
+const reset = () => {
+  // push the numbers in the chosenWinningsNumbers array back into the winningNumbers array
 	for (var i of chosenWinningNumbersArray) {
 		winningNumbersArray.push(i);
 	}
@@ -349,8 +327,10 @@ resetGameButton.addEventListener('click', (evt) => {
 		element.style.cursor = 'default';
 	})
 
-	playerCard.classList = 'bingo-card';
-	computerCard.classList = 'bingo-card';
+  bingoCards.forEach(element => {
+    element.classList = 'bingo-card';
+    element.classList.add('start');
+  })
 
 	autoplay = false;
 	autoMarkButton.checked = false;
@@ -368,10 +348,15 @@ resetGameButton.addEventListener('click', (evt) => {
 	resetGameButton.classList.add('hide');
 	generateCardsButton.classList.remove('hide');
 
-	setTimeout(() => {
-		winningNumbersContainer.classList.remove('hide');
-	}, 300)
-	
+	setTimeout(() => {winningNumbersContainer.classList.remove('hide');}, 300);
+
 	// reset the chosenWinningNumbers array
 	chosenWinningNumbersArray = [];
-})
+}
+
+
+getStartedButton.addEventListener('click', startGame);
+autoMarkButton.addEventListener('click', auto);
+generateCardsButton.addEventListener('click', pickAWinner);
+drawANumberButton.addEventListener('click', drawNumber);
+resetGameButton.addEventListener('click', reset);

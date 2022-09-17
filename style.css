@@ -436,7 +436,7 @@ input#enter-your-name::placeholder {color: #333;}
 	color: #333;
 	display: flex;
 	height: calc(var(--card-size) + 60px);
-	justify-content: start;
+	justify-content: flex-start;
 	flex-direction: column;
 	overflow: auto;
 	scrollbar-width: none;
@@ -578,6 +578,7 @@ button.float {
 
 button.hide {
 	opacity: 0;
+  pointer-events: none;
 	visibility: hidden;
 }
 
