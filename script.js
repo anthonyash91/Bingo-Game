@@ -40,7 +40,6 @@ const startGame = () => {
 	setTimeout(() => {modalTwo.classList.remove('hide');}, 800);
 }
 
-
 nameInput.addEventListener('keypress', (evt) => {
 	if (evt.key === 'Enter') {
 		evt.preventDefault();
@@ -165,7 +164,6 @@ const auto = () => {
 	}
 }
 
-
 const pickAWinner = () => {
   let bingoNumbers = {
 		b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
@@ -237,8 +235,6 @@ const pickAWinner = () => {
 	generateCardsButton.classList.add('hide');
 	drawANumberButton.classList.remove('hide');
 }
-
-
 
 const drawNumber = () => {
   // choose a random number from the winningNumbers array
@@ -354,7 +350,7 @@ const reset = () => {
 	chosenWinningNumbersArray = [];
 }
 
-
+// event handlers
 getStartedButton.addEventListener('click', startGame);
 autoMarkButton.addEventListener('click', auto);
 generateCardsButton.addEventListener('click', pickAWinner);
