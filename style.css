@@ -376,7 +376,8 @@ input#enter-your-name::placeholder {color: #333;}
 /* game tiles */
 .game-tiles .tile {
 	background-color: #fff;
-	font-size: 18px;
+	font-size: 17px;
+	padding-top: 1px;
 }
 
 .tile.hide, #bingo-cards .tile.free-tile.hide {color: #fff;}
@@ -458,9 +459,11 @@ input#enter-your-name::placeholder {color: #333;}
 	align-items: center;
 	border: var(--card-gap) solid;
 	display: flex;
+	font-size: 15px;
 	height: 60px;
 	justify-content: center;
 	opacity: 0;
+	padding-top: 0;
 	transition: .2s ease-in-out;
 	transform: scale(0);
 	width: 60px;

@@ -49,8 +49,7 @@ nameInput.addEventListener('keypress', (evt) => {
 		})
 		
 		names.forEach(element => {
-			element.classList.add('show');
-			setTimeout(() => {element.classList.add('expand')}, 600);
+			element.classList.add('show', 'expand');
 		})
 
 		setTimeout(() => {document.getElementById('gradient').classList.remove('hide');}, 400);
@@ -130,11 +129,18 @@ const checkForWinners = () => {
 		document.getElementById('gradient').classList.add('hide');
 	}
 	
+	if(playerWins && computerWins) {
+	} 
+	
 	if(playerWins && !computerWins) {
+		document.querySelector('#computer-card .name').classList.remove('expand', 'show');
 		playerCard.style.zIndex = 9;
 		playerCard.classList.add('win');
 		computerCard.classList.add('lose');
-	} else if(computerWins && !playerWins) {
+	}
+	
+	if(computerWins && !playerWins) {
+		document.querySelector('#player-card .name').classList.remove('expand', 'show');
 		computerCard.style.zIndex = 9;
 		computerCard.classList.add('win');
 		playerCard.classList.add('lose');
@@ -215,7 +221,7 @@ const pickAWinner = () => {
 			tileCounter = 0;
 		}
 		
-		if(tileCounterTwo === 30) {
+		if(tileCounterTwo === 25) {
 			tileCounterTwo = 0;
 
 			bingoNumbers = {
@@ -226,7 +232,7 @@ const pickAWinner = () => {
 				o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
 			}
 		}
-		
+
 		// remove the number just selected from the current array so it can't be picked again in the next row
 		bingoNumbersArray.splice(bingoNumbersArray.indexOf(bingoNumbersArray[randomizeArrayNumbers]), 1);
 	})
@@ -234,6 +240,7 @@ const pickAWinner = () => {
 	winningNumbersContainer.classList.remove('hide');
 	generateCardsButton.classList.add('hide');
 	drawANumberButton.classList.remove('hide');
+	console.log(chosenWinningNumbersArray)
 }
 
 const drawNumber = () => {
@@ -268,7 +275,9 @@ const drawNumber = () => {
 				}, 400)
 			}
 		})
-	} else {
+	} 
+	
+	if(!autoplay) {
 		computerTiles.forEach(element => {
 			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
 				setTimeout(() => {
@@ -281,15 +290,20 @@ const drawNumber = () => {
 		playerTiles.forEach(element => {
 			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
 				element.style.cursor = 'pointer';
-
-				element.addEventListener('click', (evt) => {
-					element.classList.add('hit');
-					element.style.cursor = 'default';
-					checkForWinners();
-				})
 			}
 		})
+
+		playerCard.addEventListener('click', (evt) => {
+			if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+				evt.target.classList.add('hit');
+				evt.target.style.cursor = 'default';
+				checkForWinners();
+				console.log('i clicked this')
+			}
+		})		
 	}
+
+	console.log(chosenWinningNumbersArray)
 }
 
 const reset = () => {
@@ -321,11 +335,14 @@ const reset = () => {
 		}
 
 		element.style.cursor = 'default';
+
+		element.removeEventListener('click', (evt) => {});
 	})
 
 	bingoCards.forEach(element => {
 		element.classList = 'bingo-card';
 		element.classList.add('start');
+		setTimeout(() => {element.removeAttribute('style');}, 400);
 	})
 
 	autoplay = false;
@@ -337,6 +354,8 @@ const reset = () => {
 	document.querySelector('#label svg').classList.remove('hide');
 	document.querySelector('#label-message').classList.remove('hide');
 	setTimeout(() => {document.getElementById('gradient').classList.remove('hide');}, 400);
+	document.querySelector('#player-card .name').classList.add('expand', 'show');
+	document.querySelector('#computer-card .name').classList.add('expand', 'show');
 
 	computerCard.classList.remove('win', 'lose');
 	playerCard.classList.remove('win', 'lose');
@@ -348,6 +367,7 @@ const reset = () => {
 
 	// reset the chosenWinningNumbers array
 	chosenWinningNumbersArray = [];
+	console.log(chosenWinningNumbersArray)
 }
 
 // event handlers
