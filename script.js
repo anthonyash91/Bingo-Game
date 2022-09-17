@@ -327,10 +327,10 @@ const reset = () => {
 		element.style.cursor = 'default';
 	})
 
-  bingoCards.forEach(element => {
-    element.classList = 'bingo-card';
-    element.classList.add('start');
-  })
+	bingoCards.forEach(element => {
+		element.classList = 'bingo-card';
+		element.classList.add('start');
+	})
 
 	autoplay = false;
 	autoMarkButton.checked = false;
