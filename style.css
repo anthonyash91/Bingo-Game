@@ -1,12 +1,15 @@
-@font-face {
-	font-family: 'Durian Days';
-	src: url("https://assets.codepen.io/8370674/DurianDays.woff2") format('woff2'),
-			url("https://assets.codepen.io/8370674/DurianDays.woff") format('woff');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
 
+:root {
+	--card-size: 450px;
+	--card-gap: 8px;
+	--card-padding: 30px;
+	--player-primary: #00B6CE;
+	--player-secondary: #004E5A;
+	--computer-primary: #8DD002;
+	--computer-secondary: #3B5B00;
+}	
+	
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -18,74 +21,574 @@ body {
 	display: flex;
 	height: 100vh;
 	justify-content: center;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
-#container {
-	margin-bottom: auto;
-	margin-top: auto;
-}
-
-#bingo-card {
-	display: grid;
-	grid-gap: 20px;
-	grid-template-columns: repeat(5, auto);
-	height: 500px;
-	width: 500px;
-}
-
-.square {
-	height: 84px;
-	width: 84px;
-	align-items: center;
-	background-color: #333;
-	border: 1px solid rgba(0,0,0,.1);
-	border-radius: 4px;
-	display: flex;
-	font-family: "Durian Days";
-	font-size: 30px;
-	justify-content: center;
-	letter-spacing: 1px;
-	position: relative;
+/* blurred background */
+#blur {
+	background: rgba(255,255,255,.6);
+	backdrop-filter: blur(9px);
+	position: fixed;
+	height: 100%;
 	transition: .2s ease-in-out;
-	user-select: none;
+	width: 100%;
+	z-index: 999;
 }
 
-.square.hide-number {
-	color: rgba(255,255,255,0);
-	text-shadow: 1px 1px 1px rgba(0,0,0,0);
-}
-
-.square.show-number {
-	color: rgba(255,255,255,1);
-	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
-}
-
-.square::after {
-	background: red;
-	border-radius: 99999px;
-	content: "";
-	height: 20px;
-	opacity: 0;
+/* modals */
+.modal {
+	left: 50%;
 	position: absolute;
-	transform: scale(20);
-	transition: .3s ease-in-out;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: .4s ease-in-out;
+}
+
+#blur.hide, #modal-two.hide {
+	opacity: 0;
 	visibility: hidden;
-	width: 20px;
 }
 
-.square.hit::after {
-	opacity: .5;
-	transform: scale(3);
-	visibility: visible;
+#modal-one.hide {animation: 1s modal-one 1;}
+
+@keyframes modal-one {
+	0% {transform: translate(-50%, -50%) scale(1);}
+	50% {transform: translate(-50%, -50%) scale(0.9);}
+	100% {transform: translate(-50%, -50%) scale(10);}
 }
 
-#card-button {
-	margin-top: 30px;
+/* ways to win modal */
+#modal-one {
+	display: grid;
+	font-family: 'LEMON MILK';
+	grid-template-areas:
+		'win win win win'
+		'card card card card'
+		'label label label label'
+		'start start start start';
+	grid-gap: 20px;
+	grid-template-columns: repeat(4, 150px);
+	padding: 30px;
+}
+
+/* ways to win modal header */
+#ways-to-win {
+	color: #333;
+	font-size: 20px;
+	grid-area: win;
 	text-align: center;
 }
 
-#winning-number {
+/* winning examples */
+.card {
+	height: 150px;
+	padding: 10px;
+	width: 150px;
+}
+
+.card-container {
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: repeat(5, calc(20% - 5px));
+	grid-template-rows: repeat(5, calc(20% - 5px));
+	height: 100%;
+	padding: 5px 0 0 5px;
+	width: 100%;
+}
+
+.card-one {background-color: var(--player-primary);}
+.card-one .card-container {background-color: var(--player-secondary);}
+.card-two {background-color: var(--computer-primary);}
+.card-two .card-container {background-color: var(--computer-secondary);}
+
+.example-tile {background-color: #fff;}
+.card-one .example-tile.hit {background-color: var(--player-primary);}
+.card-two .example-tile.hit {background-color: var(--computer-primary);}
+
+.label {text-align: center;}
+.label.one {color: var(--player-secondary);}
+.label.two {color: var(--computer-secondary);}
+
+/* let's get started button */
+#start {
+  text-align: center;
+  grid-area: start;
+  width: 100%;
+}
+
+button#get-started, input#enter-your-name {
+	background-color: transparent;
+	border: 4px solid;
+	border-bottom-color: var(--computer-primary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--computer-secondary);
+	border-top-color: var(--player-secondary);
+	color: #333;
+	cursor: pointer;
+	font-family: 'LEMON MILK';
+	font-size: 14px;
+  margin-top: 10px;
+	outline: none;
+	padding: 8px 12px;
+  text-align: center;
+  width: 200px;
+}
+
+button#get-started:active {transform: translateY(2px);}
+
+/* enter your name field */
+input#enter-your-name {
+	border-width: var(--card-gap);
+	font-size: 20px;
+	padding: 15px;
+	width: 500px;
+}
+
+input#enter-your-name::placeholder {color: #333;}
+
+/* container */
+#bingo-cards {
+	display: grid;
+	font-family: 'LEMON MILK';
+	grid-template-areas:
+		'player-card winning-numbers computer-card'
+		'buttons buttons buttons';
+	grid-template-columns: repeat(3, auto);
+	margin-bottom: auto;
+	margin-top: auto;
+	padding: 70px 0 50px 0;
+	width: auto;
+}
+
+/* cards */
+.bingo-card {
+	height: calc(var(--card-size) + 50px);
+	padding: 0 var(--card-padding) var(--card-padding) var(--card-padding);
+	position: relative;
+	transition: .4s ease-in-out;
+	width: var(--card-size);
+}
+
+#player-card.bingo-card {
+	background-color: var(--player-primary);
+	transform: translate(100px, 0) rotate(-10deg);
+}
+
+#player-card.bingo-card.start, #computer-card.bingo-card.start {transform: translate(0,0) rotate(0deg);}
+#player-card.bingo-card.win {transform: translate(250px,0)}
+#player-card.bingo-card.lose {transform: translate(120px,0) rotate(-20deg) scale(0.8);}
+
+#computer-card.bingo-card {
+	background-color: var(--computer-primary);
+	transform: translate(-100px, 0) rotate(10deg);
+}
+
+#computer-card.bingo-card.win {transform: translate(-250px,0);}
+#computer-card.bingo-card.lose {transform: translate(-120px,0) rotate(20deg) scale(0.8);}
+
+/* automark choice */
+#auto-mark {
+	height: 24px;
+	left: 0;
+	position: absolute;
+	top: -55px;
+	width: 24px;
+	z-index: 9;
+}
+
+#auto-mark input {
+	cursor: pointer;
+	height: 100%;
+	opacity: 0;
+	position: absolute;
+	width: 140px;
+	z-index: 9;
+}
+
+#auto-mark #check {
+	background-image: url(images/check-mark.svg);
+	background-size: cover;
+	background-position: center;
+	border: 6px solid var(--player-primary);
+	border-radius: 999px;
+	height: 23px;
+	transition: .2s ease-in-out;
+	width: 23px;
+}
+
+#auto-mark input:checked ~ #check {background-color: var(--player-primary);}
+
+#label {
+	color: var(--player-secondary);
+	left: 31px;
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+#label svg {
+	fill: var(--player-secondary);
+	position: absolute;
+	right: -20px;
+	top: -8px;
+	transition: .4s ease-in-out;
+	width: 17px;
+}
+
+#label svg.hide {opacity: 0;}
+
+/* automark message */
+#label-message {
+	background-color: var(--player-secondary);
+	color: #fff;
+	font-family: 'Noto Sans JP', Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 500;
+	left: -22px;
+	opacity: 0;
+	padding: 10px 17px 12px 17px;
+	position: absolute;
+	text-align: center;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
+	top: 108px;
+	transition: .4s ease-in-out;
+	visibility: hidden;
+	width: 270px;
+	word-wrap: break-word;
+}
+
+#auto-mark:hover #label-message {
+	opacity: 1;
+	top: 28px;
+	visibility: visible;
+}
+
+#auto-mark #label-message.hide {
+	opacity: 0;
+	top: 108px;
+	visibility: hidden;
+}
+
+#triangle {
+	border-color: transparent transparent var(--player-secondary) transparent;
+	border-style: solid;
+	border-width: 0 9px 9px 9px;
+	display: inline-block;
+	height: 0;
+	left: 50%;
+	position: absolute;
+	top: -9px;
+	transform: translate(-50%, 0);
+	width: 0;
+}
+
+/* name */
+.name {
+	bottom: 233px;
+	font-size: 24px;
+	opacity: 0;
+	position: absolute;
+	transition: .4s ease-in-out;
+	width: 521px;
+	z-index: 9;
+}
+
+.name.show {
+	opacity: 1;
+}
+
+.name::before {
+	content: '';
+	height: var(--card-gap);
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+	transition: .4s ease-in-out;
+	width: 0%;
+}
+
+#player-card .name::before {background-color: var(--player-secondary);}
+#computer-card .name::before {background-color: var(--computer-secondary);}
+
+.name.expand::before {width: 100%;}
+
+#player-card .name {
+	color: var(--player-secondary);
+	left: -290px;
+	transform: rotate(-90deg);
+}
+
+#computer-card .name {
+	color: var(--computer-secondary);
+	right: -290px;
+	transform: rotate(90deg);
+}
+
+.name span {
+	background-color: #fff;
+	margin-left: 15px;
+	padding: 0 10px;
+	position: relative;
+	z-index: 9;
+}
+
+/* tiles container */
+.tiles-container {
+	display: grid;
+	grid-gap: var(--card-gap);
+	grid-template-columns: repeat(5, calc(20% - var(--card-gap)));
+	padding: var(--card-gap) 0 0 var(--card-gap);
+}
+
+/* header tiles */
+.tiles-container.header-tiles {height: 15%;}
+
+/* game tiles */
+.tiles-container.game-tiles {
+	grid-template-rows: repeat(5, calc(20% - var(--card-gap)));
+	height: 85%;
+}
+
+#player-card .tiles-container.game-tiles {background-color: var(--player-secondary);}
+#computer-card .tiles-container.game-tiles {background-color: var(--computer-secondary);}
+
+/* tiles */
+.tile {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	transition: .2s ease-in-out;
+}
+
+/* header tiles */
+.header-tiles .tile {
+	color: #fff;
+	font-size: 30px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
+}
+
+.header-tiles .tile.hide {opacity: 0;}
+
+/* tile text colors */
+#player-card .game-tiles .tile.show, #player-card .tile.free-tile {color: var(--player-secondary);}
+#computer-card .game-tiles .tile.show, #computer-card .tile.free-tile {color: var(--computer-secondary);}
+
+/* game tiles */
+.game-tiles .tile {
+	background-color: #fff;
+	font-size: 18px;
+}
+
+.tile.hide, #bingo-cards .tile.free-tile.hide {color: #fff;}
+
+/* hit tiles */
+#bingo-cards .game-tiles .tile.hit {
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
+}
+
+#player-card .tile.hit {background-color: var(--player-primary);}
+#computer-card .tile.hit {background-color: var(--computer-primary);}
+
+/* winning tiles */
+#player-card .tile.winner, #computer-card .tile.winner {animation: .6s winner infinite;}
+
+@keyframes winner {
+	50% {transform: scale(0.8);}
+}
+
+/* rips */
+.rip {
+	height: 20px;
+	left: 0;
 	overflow: hidden;
-	width: 200px;
+	position: absolute;
+	width: 100%;
+}
+
+/* top rip */
+.rip.top-rip {
+	top: -19px;
+	transform: scaleY(-1);
+}
+
+/* bottom rip */
+.rip.bottom-rip {
+	bottom: -19px;
+	transform: scaleX(-1);
+}
+
+/* rip svgs */
+.rip svg {
+	bottom: 0;
+	position: absolute;
+}
+
+#player-card .rip svg {fill: var(--player-primary);}
+#computer-card .rip svg {fill: var(--computer-primary);}
+
+/* winning numbers */
+#winning-numbers-container {position: relative;}
+
+/* overflow container for scrolling */
+#winning-numbers-overflow {
+	align-items: center;
+	color: #333;
+	display: flex;
+	height: calc(var(--card-size) + 60px);
+	justify-content: start;
+	flex-direction: column;
+	overflow: auto;
+	scrollbar-width: none;
+	width: 100px;
+}
+
+/* hide the scrollbar */
+#winning-numbers-overflow::-webkit-scrollbar {width: 0px;}
+
+/* winning numbers */
+#winning-numbers {
+	margin-bottom: auto;
+	margin-top: auto;
+	transition: .2s ease-in-out;
+}
+
+/* individual winning number */
+.number {
+	align-items: center;
+	border: var(--card-gap) solid;
+	display: flex;
+	height: 60px;
+	justify-content: center;
+	opacity: 0;
+	transition: .2s ease-in-out;
+	transform: scale(0);
+	width: 60px;
+}
+
+/* determine the color of the winning number's border */
+.number.color-one {
+	border-bottom-color: var(--computer-primary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--computer-secondary);
+	border-top-color: var(--player-secondary);
+}
+
+.number.color-one  {
+	 background-image: linear-gradient(90deg, var(--player-secondary), var(--computer-secondary));
+  background-repeat: repeat;
+  background-size: 100%;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
+.number.color-two {
+	border-bottom-color: var(--player-secondary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--player-secondary);
+	border-top-color: var(--player-primary);
+	color: var(--player-secondary);
+}
+
+.number.color-three {
+	border-bottom-color: var(--computer-secondary);
+	border-left-color: var(--computer-primary);
+	border-right-color: var(--computer-secondary);
+	border-top-color: var(--computer-primary);
+	color: var(--computer-secondary);
+}
+
+.number.color-four {
+	border-bottom-color: #383838;
+	border-left-color: #818181;
+	border-right-color: #383838;
+	border-top-color: #818181;
+}
+
+.number.show {
+	opacity: 0.5;
+	transform: scale(0.7);
+}
+
+/* highlight the current number */
+.number.show:first-child {
+	margin-bottom: 9px;
+	opacity: 1;
+	transform: scale(1);
+}
+
+#winning-numbers.hide .number,
+#winning-numbers.hide .number.show {
+	opacity: 0;
+	transform: scale(0);
+}
+
+/* gradient */
+#gradient {
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,0.7+60,1+81,1+100 */
+	background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 60%,rgba(255,255,255,1) 81%,rgba(255,255,255,1) 100%);
+	background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 81%, rgba(255,255,255,1) 100%);
+	background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 60%,rgba(255,255,255,1) 81%,rgba(255,255,255,1) 100%);
+	bottom: 0;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+	height: 64px;
+	left: 0;
+	position: absolute;
+	transform: rotate(90deg);
+	transition: .2s ease-in-out;
+	width: 100px;
+	z-index: 99;
+}
+
+#gradient.hide {opacity: 0;}
+
+/* game buttons */
+#game-buttons {
+	grid-area: buttons;
+	margin: 0 auto;
+	margin-top: 60px;
+	position: relative;
+}
+
+#game-buttons button {
+	background-color: #fff;
+	border: var(--card-gap) solid;
+	border-bottom-color: var(--computer-primary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--computer-secondary);
+	border-top-color: var(--player-secondary);
+	color: #333;
+	cursor: pointer;
+	display: inline-block;
+	font-family: 'LEMON MILK';
+	font-size: 18px;
+	outline: none;
+	padding: 8px 12px 7px 12px;
+	transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+	white-space: nowrap;
+}
+
+button.float {
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, 0);
+}
+
+button.hide {
+	opacity: 0;
+	visibility: hidden;
+}
+
+button:active {transform: translateY(2px);}
+button.float:active {transform: translate(-50%, 2px);}
+
+/* fonts */
+@font-face {
+	font-family: 'LEMON MILK';
+	font-display: swap;
+	font-style: normal;
+	font-weight: bold;
+	src: url(fonts/LEMONMILK-Bold.woff) format('woff');
 }
