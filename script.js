@@ -336,7 +336,7 @@ const reset = () => {
 
 	document.querySelector('#label svg').classList.remove('hide');
 	document.querySelector('#label-message').classList.remove('hide');
-	document.getElementById('gradient').classList.remove('hide');
+	setTimeout(() => {document.getElementById('gradient').classList.remove('hide');}, 400);
 
 	computerCard.classList.remove('win', 'lose');
 	playerCard.classList.remove('win', 'lose');
