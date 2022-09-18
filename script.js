@@ -8,6 +8,7 @@ freeTiles = document.querySelectorAll('.free-tile'),
 gameTiles = document.querySelectorAll('.game-tiles .tile'),
 names = document.querySelectorAll('.name'),
 playerName = document.querySelector('#player-card .name span'),
+autoMark = document.querySelector('#auto-mark'),
 autoMarkButton = document.querySelector('#auto-mark input'),
 winningNumbersContainer = document.getElementById('winning-numbers'),
 generateCardsButton = document.getElementById('generate-cards'),
@@ -28,6 +29,11 @@ autoplay = false,
 playerWins = false,
 computerWins = false,
 loserCounter = 0;
+
+const startConfetti = document.querySelector(".winner");
+const stopConfetti = document.querySelector(".cancel");
+const starsDiv = document.querySelector('.stars');
+const colors = ['confetti-color-one', 'confetti-color-two'];
 
 const startGame = () => {
   modalOne.classList.add('hide');
@@ -57,6 +63,52 @@ nameInput.addEventListener('keypress', (evt) => {
 		playerName.innerText = nameInput.value;
 	}
 })
+
+const confettiCannon = () => {
+		for(let i = 0; i < 500; i++) {
+				const star = document.createElement('div');
+				let randomizeColors = Math.floor(Math.random() * colors.length);
+				let starSize = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+				let starPositionOne = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
+				let starPositionTwo = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
+				let starSpeed = Math.floor(Math.random() * (1 - 0.5 + 1)) + 0.5;
+				let borderRadius = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+				let rotate = Math.floor(Math.random() * (360 - 1 + 1)) + 1;
+				let triangleSize = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+				let triangleSizeTwo = triangleSize * 2;
+
+				star.classList.add('starzz', colors[randomizeColors]);
+				star.style.borderRadius = `${borderRadius}px`
+				star.style.transition = `all ${starSpeed}s`;
+				star.style.transform = `rotate(${rotate}deg)`
+				star.style.height = `${starSize}px`;
+				star.style.width = `${starSize}px`;
+
+				setTimeout(() => {
+					star.style.marginTop = `${starPositionOne}px`;
+					star.style.marginLeft = `${starPositionTwo}px`;
+					star.style.opacity = 1;
+				}, 100)
+
+				if(i % 5 === 0) {
+					star.classList.add('triangle');
+					star.style.borderRadius = '0px';
+					star.style.backgroundColor = 'transparent';
+					star.style.borderRight = `${triangleSize}px solid transparent`;
+					star.style.borderLeft = `${triangleSize}px solid transparent`;
+					star.style.borderBottom = `${triangleSizeTwo}px solid`;
+				}
+
+				starsDiv.appendChild(star);
+			}
+}
+
+const removeConfetti = () => {
+	document.querySelectorAll('.starzz').forEach(element => {
+		element.style.opacity = 0;
+		setTimeout(() => {element.remove();}, 500);
+	})
+}
 
 // winning conditions
 const checkForWinners = () => {
@@ -107,7 +159,6 @@ const checkForWinners = () => {
 			})
 
 			playerWins = true;
-			console.log('player wins');
 		}
 	}
 	
@@ -118,35 +169,34 @@ const checkForWinners = () => {
 			})
 
 			computerWins = true;
-			console.log('computer wins');
 		}
 	}
 	
 	if(playerWins || computerWins) {
+		autoMark.classList.add('hide');
 		drawANumberButton.classList.add('hide');
-		resetGameButton.classList.remove('hide');
+		setTimeout(() => {resetGameButton.classList.remove('hide');}, 1000);
 		winningNumbersContainer.classList.add('hide');
 		document.getElementById('gradient').classList.add('hide');
 	}
 	
 	if(playerWins && computerWins) {
-	} 
-	
-	if(playerWins && !computerWins) {
+	} else if(playerWins && !computerWins) {
 		document.querySelector('#computer-card .name').classList.remove('expand', 'show');
 		playerCard.style.zIndex = 9;
 		playerCard.classList.add('win');
 		computerCard.classList.add('lose');
-	}
-	
-	if(computerWins && !playerWins) {
+		document.querySelector('.stars').classList.add('player-wins');
+		setTimeout(() => {confettiCannon();}, 400);
+	} else if(computerWins && !playerWins) {
 		document.querySelector('#player-card .name').classList.remove('expand', 'show');
 		computerCard.style.zIndex = 9;
 		computerCard.classList.add('win');
 		playerCard.classList.add('lose');
+		document.querySelector('.stars').classList.add('computer-wins');
+		setTimeout(() => {confettiCannon();}, 400);
 	}
 }
-
 
 const auto = () => {
   if(autoplay === false) {
@@ -170,7 +220,7 @@ const auto = () => {
 	}
 }
 
-const pickAWinner = () => {
+const generate = () => {
   let bingoNumbers = {
 		b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
 		i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
@@ -190,7 +240,7 @@ const pickAWinner = () => {
 		// select a random number from the current array in the bingoNumbers object
 		const pickNum = bingoNumbersArray[randomizeArrayNumbers];
 		const randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
-		
+
 		chosenNumbersArray.push(bingoLetters[tileCounter].toUpperCase() + pickNum);
 		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
 		element.classList.contains('header-tile') && i++;
@@ -240,10 +290,23 @@ const pickAWinner = () => {
 	winningNumbersContainer.classList.remove('hide');
 	generateCardsButton.classList.add('hide');
 	drawANumberButton.classList.remove('hide');
-	console.log(chosenWinningNumbersArray)
 }
 
+
+
+let showQuestion = false;
+
 const drawNumber = () => {
+	const randomQuestionNum = Math.floor(Math.random() * (1000 - 0 + 1)) + 1;
+	if(randomQuestionNum % 6 === 0) {
+		showQuestion = true;
+	} else {
+		showQuestion = false;
+	}
+	console.log(randomQuestionNum)
+	console.log(showQuestion)
+
+
   // choose a random number from the winningNumbers array
 	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbersArray.length);
 	const randomWinningNumber = winningNumbersArray[randomizeWinningNumbers];
@@ -295,20 +358,24 @@ const drawNumber = () => {
 
 		playerCard.addEventListener('click', (evt) => {
 			if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-				evt.target.classList.add('hit');
-				evt.target.style.cursor = 'default';
-				checkForWinners();
-				console.log('i clicked this')
+				if(showQuestion){
+					console.log('the question should show')
+					evt.target.classList.add('hit');
+					evt.target.style.cursor = 'default';
+					checkForWinners();
+				} else {
+					evt.target.classList.add('hit');
+					evt.target.style.cursor = 'default';
+					checkForWinners();
+				}
 			}
 		})		
 	}
-
-	console.log(chosenWinningNumbersArray)
 }
 
 const reset = () => {
   // push the numbers in the chosenWinningsNumbers array back into the winningNumbers array
-	for (var i of chosenWinningNumbersArray) {
+	for(let i of chosenWinningNumbersArray) {
 		winningNumbersArray.push(i);
 	}
 	
@@ -335,7 +402,6 @@ const reset = () => {
 		}
 
 		element.style.cursor = 'default';
-
 		element.removeEventListener('click', (evt) => {});
 	})
 
@@ -360,19 +426,20 @@ const reset = () => {
 	computerCard.classList.remove('win', 'lose');
 	playerCard.classList.remove('win', 'lose');
 
+	autoMark.classList.remove('hide');
 	resetGameButton.classList.add('hide');
 	generateCardsButton.classList.remove('hide');
+	removeConfetti();
 
 	setTimeout(() => {winningNumbersContainer.classList.remove('hide');}, 300);
 
 	// reset the chosenWinningNumbers array
 	chosenWinningNumbersArray = [];
-	console.log(chosenWinningNumbersArray)
 }
 
 // event handlers
 getStartedButton.addEventListener('click', startGame);
 autoMarkButton.addEventListener('click', auto);
-generateCardsButton.addEventListener('click', pickAWinner);
+generateCardsButton.addEventListener('click', generate);
 drawANumberButton.addEventListener('click', drawNumber);
 resetGameButton.addEventListener('click', reset);

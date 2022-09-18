@@ -157,7 +157,25 @@ input#enter-your-name::placeholder {color: #333;}
 	margin-bottom: auto;
 	margin-top: auto;
 	padding: 70px 0 50px 0;
+	position: relative;
 	width: auto;
+}
+
+/* winner messages */
+.winning-message {
+	font-size: 35px;
+	left: 50%;
+	position: absolute;
+	top: -80px;
+	transform: translate(-50%, 0);
+}
+
+#player-card .winning-message {
+	color: var(--player-secondary);
+}
+
+#computer-card .winning-message {
+	color: var(--player-secondary);
 }
 
 /* cards */
@@ -175,7 +193,7 @@ input#enter-your-name::placeholder {color: #333;}
 }
 
 #player-card.bingo-card.start, #computer-card.bingo-card.start {transform: translate(0,0) rotate(0deg);}
-#player-card.bingo-card.win {transform: translate(250px,0)}
+#player-card.bingo-card.win {transform: translate(276px,0)}
 #player-card.bingo-card.lose {transform: translate(120px,0) rotate(-20deg) scale(0.8);}
 
 #computer-card.bingo-card {
@@ -183,7 +201,7 @@ input#enter-your-name::placeholder {color: #333;}
 	transform: translate(-100px, 0) rotate(10deg);
 }
 
-#computer-card.bingo-card.win {transform: translate(-250px,0);}
+#computer-card.bingo-card.win {transform: translate(-276px,0);}
 #computer-card.bingo-card.lose {transform: translate(-120px,0) rotate(20deg) scale(0.8);}
 
 /* automark choice */
@@ -192,8 +210,13 @@ input#enter-your-name::placeholder {color: #333;}
 	left: 0;
 	position: absolute;
 	top: -55px;
+	transition: .4s ease-in-out;
 	width: 24px;
 	z-index: 9;
+}
+
+#auto-mark.hide {
+	opacity: 0;
 }
 
 #auto-mark input {
@@ -595,4 +618,51 @@ button.float:active {transform: translate(-50%, 2px);}
 	font-style: normal;
 	font-weight: bold;
 	src: url(fonts/LEMONMILK-Bold.woff) format('woff');
+}
+
+
+
+.stars {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.starzz {
+  border-radius: 2px;
+  left: 50%;
+  margin-left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.triangle {
+	width: 0!important;
+      height: 0!important;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 10px solid;
+}
+
+.player-wins .confetti-color-one {
+	background-color: var(--player-primary);
+	border-bottom-color: var(--player-primary)!important;
+}
+
+.player-wins .confetti-color-two {
+	background-color: var(--player-secondary);
+	border-bottom-color: var(--player-secondary)!important;
+}
+
+.computer-wins .confetti-color-one {
+	background-color: var(--computer-primary);
+	border-bottom-color: var(--computer-primary)!important;
+}
+
+.computer-wins .confetti-color-two {
+	background-color: var(--computer-secondary);
+	border-bottom-color: var(--computer-secondary)!important;
 }
