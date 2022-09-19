@@ -25,7 +25,7 @@ body {
 }
 
 /* blurred background */
-#blur {
+#blur, #blur-card {
 	background: rgba(255,255,255,.6);
 	backdrop-filter: blur(9px);
 	position: fixed;
@@ -33,6 +33,34 @@ body {
 	transition: .2s ease-in-out;
 	width: 100%;
 	z-index: 999;
+}
+
+#blur-card {
+	backdrop-filter: blur(5px);
+	height: 115%;
+	left: -20px;
+	opacity: 0;
+	top: -30px;
+	transition: .4s ease-in-out;
+	visibility: hidden;
+	width: 110%;
+}
+
+#blur-card.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+#random-question-container {
+	color: #333;
+	left: 50%;
+	padding: 30px;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: .4s ease-in-out;
+	width: 100%;
 }
 
 /* modals */
@@ -606,6 +634,11 @@ button.hide {
 	opacity: 0;
   pointer-events: none;
 	visibility: hidden;
+}
+
+button.dim {
+	opacity: 0.5;
+	pointer-events: none;
 }
 
 button:active {transform: translateY(2px);}

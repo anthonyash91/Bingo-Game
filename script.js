@@ -28,7 +28,34 @@ tileCounterTwo = 0,
 autoplay = false,
 playerWins = false,
 computerWins = false,
-loserCounter = 0;
+loserCounter = 0,
+triviaQuestions = [
+	{question: 'What is the former name of Istanbul?', answer: 'Constantinople'},
+	{question: 'In which year was the first Harry Potter book published?', answer: '1997'},
+	{question: 'The name of which household product is short for "water displacement, formulation successful in 40th attempt"?', answer: 'WD-40'},
+	{question: 'How many sides does a nonagon have?', answer: '9'},
+	{question: 'Off which country does the island of Zanzibar lie?', answer: 'Tanzinia'},
+	{question: 'What type of insect is a weevil?', answer: 'Beetle'},
+	{question: 'Which Disney cartoon character\'s love interest is named Megara?', answer: 'Hercules'},
+	{question: 'Which precious stones are found in the Namib desert in Africa?', answer: 'Diamonds'},
+	{question: 'What astronomical unit of distance equals about 5.88 trillion miles?', answer: 'Lightyear'},
+	{question: 'Which animal\'s name translates as "the lizard" in Spanish?', answer: 'Alligator'},
+	{question: 'Which city contains the most billionaires?', answer: 'Moscow'},
+	{question: 'The Spanish Civil War began in what year?', answer: '1936'},
+	{question: 'What is the capital of the US state of Delaware?', answer: 'Dover'},
+	{question: 'What was U.S. President Wilson\'s first name?', answer: 'Thomas'},
+	{question: 'Which US state is located between California and Utah?', answer: 'Nevada'},
+	{question: 'Machu Picchu is located in what country?', answer: 'Peru'},
+	{question: 'Acarophobia is the fear of what?', answer: 'Insects'},
+	{question: 'A male horse is known as a colt until it reaches what age?', answer: '5'},
+	{question: 'What is Mozart\'s full name?', answer: 'Wolfgang Amadeus Mozart'},
+	{question: 'The "Pentagon Papers" contained secret government information about what?', answer: 'The Vietnam War'},
+	{question: 'Hydraulics is the study of what?', answer: 'Fluids'}
+],
+showQuestion = false,
+currentRandomNumber = [],
+chosenQuestions = [],
+currentQuestion = [];
 
 const startConfetti = document.querySelector(".winner");
 const stopConfetti = document.querySelector(".cancel");
@@ -202,13 +229,48 @@ const auto = () => {
   if(autoplay === false) {
 		autoplay = true;
 
-    setTimeout(() => {
-      allTiles.forEach(element => {
-        if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
-          element.classList.add('hit');
-        }
-      })
-    }, 400)
+    computerTiles.forEach(element => {
+			if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
+				setTimeout(() => {
+					element.classList.add('hit');
+					checkForWinners();
+				}, 400)
+			}
+		})
+
+		playerTiles.forEach(element => {
+			if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
+				if(showQuestion){
+					// evt.target.classList.add('hit');
+					document.getElementById('blur-card').classList.add('show');
+
+					document.getElementById('question-submit').addEventListener('click', () => {
+						if(document.getElementById('question-input').value === 'too') {
+							if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
+								setTimeout(() => {element.classList.add('hit');}, 200);
+							}
+
+							document.getElementById('blur-card').classList.remove('show');
+							// element.setAttribute('data', 'lost-tile');
+							drawANumberButton.classList.remove('dim');
+							showQuestion = false;
+							setTimeout(() => {checkForWinners();}, 300);
+						} else {
+							document.getElementById('blur-card').classList.remove('show');
+							// element.setAttribute('data', 'lost-tile');
+							drawANumberButton.classList.remove('dim');
+							showQuestion = false;
+							checkForWinners();
+						}
+					})
+				} else {
+					element.classList.add('hit');
+					drawANumberButton.classList.remove('dim');
+					showQuestion = false;
+					checkForWinners();
+				}
+			}
+		})
 
 		document.querySelector('#label svg').classList.add('hide');
 		document.querySelector('#label-message').classList.add('hide');
@@ -292,20 +354,17 @@ const generate = () => {
 	drawANumberButton.classList.remove('hide');
 }
 
-
-
-let showQuestion = false;
-
 const drawNumber = () => {
+	showQuestion = false;
+	currentRandomNumber = []
 	const randomQuestionNum = Math.floor(Math.random() * (1000 - 0 + 1)) + 1;
-	if(randomQuestionNum % 6 === 0) {
+	currentRandomNumber.push(randomQuestionNum);
+
+	if(currentRandomNumber[0] % 2 === 0) {
 		showQuestion = true;
 	} else {
 		showQuestion = false;
 	}
-	console.log(randomQuestionNum)
-	console.log(showQuestion)
-
 
   // choose a random number from the winningNumbers array
 	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbersArray.length);
@@ -318,7 +377,17 @@ const drawNumber = () => {
 		div.classList.add('number', randomWinningNumber);	
 		div.innerHTML = numberSpan;
 
-    div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-one") : div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-two") : div.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber) ? div.classList.add("color-three") : div.classList.add("color-four");
+		if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
+			div.classList.add("color-one");
+			drawANumberButton.classList.add('dim');
+		} else if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber)) {
+			div.classList.add("color-two");
+			drawANumberButton.classList.add('dim');
+		} else if(div.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
+			div.classList.add("color-three");
+		} else {
+			div.classList.add("color-four");
+		}
 
 		setTimeout(() => {div.classList.add('show');}, 100);
 
@@ -329,13 +398,49 @@ const drawNumber = () => {
 		chosenWinningNumbersArray.push(randomWinningNumber);
 	}
 
+	// put the same thing in autoplay as you have in not autoplay
 	if(autoplay) {
-		allTiles.forEach(element => {
+		computerTiles.forEach(element => {
 			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
 				setTimeout(() => {
 					element.classList.add('hit');
 					checkForWinners();
 				}, 400)
+			}
+		})
+
+		playerTiles.forEach(element => {
+			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+					if(showQuestion){
+						document.getElementById('blur-card').classList.add('show');
+
+						document.getElementById('question-submit').addEventListener('click', () => {
+							if(document.getElementById('question-input').value === 'too') {
+								if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+									setTimeout(() => {element.classList.add('hit');}, 200);
+								}
+
+								document.getElementById('blur-card').classList.remove('show');
+								element.setAttribute('data', 'lost-tile');
+								drawANumberButton.classList.remove('dim');
+								showQuestion = false;
+								setTimeout(() => {checkForWinners();}, 300);
+							} else {
+								document.getElementById('blur-card').classList.remove('show');
+								element.setAttribute('data', 'lost-tile');
+								drawANumberButton.classList.remove('dim');
+								showQuestion = false;
+								checkForWinners();
+							}
+						})
+					} else {
+						drawANumberButton.classList.remove('dim');
+						showQuestion = false;
+						setTimeout(() => {
+							element.classList.add('hit');
+							checkForWinners();
+						}, 400)
+					}
 			}
 		})
 	} 
@@ -359,18 +464,55 @@ const drawNumber = () => {
 		playerCard.addEventListener('click', (evt) => {
 			if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
 				if(showQuestion){
-					console.log('the question should show')
-					evt.target.classList.add('hit');
-					evt.target.style.cursor = 'default';
-					checkForWinners();
+					const randomizeQuestions = Math.floor(Math.random() * (triviaQuestions.length - 1 + 1)) + 0;
+					const pickQuestion = triviaQuestions[randomizeQuestions];
+ 
+					if(triviaQuestions.length > 0) {
+						currentQuestion = [];
+						chosenQuestions.push(pickQuestion);
+						currentQuestion.push(pickQuestion);
+						document.getElementById('random-question').innerText = pickQuestion.question;
+						triviaQuestions.splice(randomizeQuestions, 1);
+					}
+
+					// evt.target.classList.add('hit');
+					document.getElementById('blur-card').classList.add('show');
+					
+					document.getElementById('question-submit').addEventListener('click', () => {
+						if(document.getElementById('question-input').value.toLowerCase() === currentQuestion[0].answer.toLowerCase()) {
+							if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+								setTimeout(() => {evt.target.classList.add('hit');}, 200);
+								evt.target.setAttribute('data', 'lost-tile');
+							}
+
+							document.getElementById('blur-card').classList.remove('show');
+							drawANumberButton.classList.remove('dim');
+							showQuestion = false;
+							setTimeout(() => {checkForWinners();}, 300);
+						} else {
+							document.getElementById('blur-card').classList.remove('show');
+							if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+								evt.target.setAttribute('data', 'lost-tile');
+							}
+							drawANumberButton.classList.remove('dim');
+							showQuestion = false;
+							checkForWinners();
+						}
+
+						evt.target.style.cursor = 'default';
+					})
 				} else {
 					evt.target.classList.add('hit');
 					evt.target.style.cursor = 'default';
+					drawANumberButton.classList.remove('dim');
+					showQuestion = false;
 					checkForWinners();
 				}
 			}
 		})		
 	}
+
+	console.log(triviaQuestions);
 }
 
 const reset = () => {
@@ -378,10 +520,14 @@ const reset = () => {
 	for(let i of chosenWinningNumbersArray) {
 		winningNumbersArray.push(i);
 	}
+
+	for(let i of chosenQuestions) {
+		triviaQuestions.push(i);
+	}
 	
 	// remove all the appended numbers from the winning-numbers div
 	setTimeout(() => {
-		while (winningNumbersContainer.firstChild) {
+		while(winningNumbersContainer.firstChild) {
 			winningNumbersContainer.removeChild(winningNumbersContainer.firstChild);
 		}
 	}, 250)
@@ -416,6 +562,10 @@ const reset = () => {
 	playerWins = false;
 	computerWins = false;
 	loserCounter = 0;
+	showQuestion = false;
+	currentRandomNumber = [];
+	chosenQuestions = [];
+	currentQuestion = [];
 
 	document.querySelector('#label svg').classList.remove('hide');
 	document.querySelector('#label-message').classList.remove('hide');
@@ -429,12 +579,14 @@ const reset = () => {
 	autoMark.classList.remove('hide');
 	resetGameButton.classList.add('hide');
 	generateCardsButton.classList.remove('hide');
+	drawANumberButton.classList.remove('dim');
 	removeConfetti();
 
 	setTimeout(() => {winningNumbersContainer.classList.remove('hide');}, 300);
 
 	// reset the chosenWinningNumbers array
 	chosenWinningNumbersArray = [];
+	chosenNumbersArray = [];
 }
 
 // event handlers
