@@ -487,7 +487,7 @@ const drawNumber = () => {
 	setTimeout(() => {
 		console.log('check for winners')
 		checkForWinners();
-	}, 400)
+	}, 200)
 }
 
 generateCardsButton.addEventListener('click', generateCards);
@@ -598,6 +598,8 @@ const resetGame = () => {
 		playerName.innerText = '';
 	}, 600);
 
+	modalOne.removeAttribute('style');
+	modalTwo.removeAttribute('style');
 	setTimeOut(() => {blur.classList.remove('slow');}, 700);
 	resetGameButton.classList.add('hide');
 	chosenWinningNumbersArray = [];

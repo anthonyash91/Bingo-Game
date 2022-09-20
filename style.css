@@ -329,7 +329,7 @@ main#bingo-cards.computer-one-and-player-win #computer-two, main#bingo-cards.com
 	align-items: center;
 	background-color: rgba(255,255,255,.6);
 	backdrop-filter: blur(6px);
-	color: #333;
+	color: var(--player-secondary);
 	display: flex;
 	flex-direction: column;
 	font-family: 'MADE Tommy Soft Bold';
