@@ -20,6 +20,7 @@
 
 body {
 	align-items: center;
+	background-color: whitesmoke;
 	display: flex;
 	height: 100vh;
 	justify-content: center;
@@ -28,7 +29,7 @@ body {
 
 /* opening modal */
 #blur {
-	background: rgba(255,255,255,.6);
+	background: rgba(245,245,245,.6);
 	backdrop-filter: blur(9px);
 	position: fixed;
 	height: 100%;
@@ -124,7 +125,7 @@ body {
 .card-four .card-container {background-color: #383838;}
 
 .example-tile {
-	background-color: #fff;
+	background-color: whitesmoke;
 	border-radius: 2px;
 }
 
@@ -327,7 +328,7 @@ main#bingo-cards.computer-one-and-player-win #computer-two, main#bingo-cards.com
 
 #card-blur {
 	align-items: center;
-	background-color: rgba(255,255,255,.6);
+	background-color: rgba(245,245,245,.6);
 	backdrop-filter: blur(6px);
 	color: var(--player-secondary);
 	display: flex;
@@ -430,7 +431,7 @@ main#bingo-cards.computer-one-and-player-win #computer-two, main#bingo-cards.com
 #computer-two.bingo-card .name::before {background-color: var(--computer-two-secondary);}
 
 .name span {
-	background: #fff;
+	background: whitesmoke;
 	padding: 0 10px;
 	position: relative;
 	transition: .2s ease-in-out;
@@ -494,12 +495,12 @@ main#bingo-cards.computer-one-and-player-win #computer-two, main#bingo-cards.com
 }
 
 .header-tiles .tile {
-	color: #fff;
+	color: whitesmoke;
 	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
 }
 
-.game-tiles .tile {background-color: #fff;}
-.game-tiles .tile:not(.free-tile).hide {color: #fff;}
+.game-tiles .tile {background-color: whitesmoke;}
+.game-tiles .tile:not(.free-tile).hide {color: whitesmoke;}
 
 .game-tiles .tile.free-tile {
 	font-family: 'Star Things 2';
@@ -507,7 +508,7 @@ main#bingo-cards.computer-one-and-player-win #computer-two, main#bingo-cards.com
 }
 
 .game-tiles .tile.hit {
-	color: #fff;
+	color: whitesmoke;
 	text-shadow: 1px 1px 1px rgba(0,0,0,.1);
 }
 
@@ -616,7 +617,7 @@ footer #winning-numbers-container.hide {
 
 #winning-numbers .winning-number {
 	align-items: center;
-	background-color: #fff;
+	background-color: transparent;
 	border: 6px solid;
 	border-radius: 4px;
 	display: inline-flex;
@@ -741,11 +742,11 @@ footer #winning-numbers-container.hide {
 
 #gradient {
 	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,0.7+60,1+81,1+100 */
-	background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 81%, rgba(255,255,255,1) 100%);
-/* 	background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 81%, rgba(255,255,255,1) 100%);
-	background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 60%,rgba(255,255,255,1) 81%,rgba(255,255,255,1) 100%); */
+	background: linear-gradient(to right, rgba(245,245,245,0) 0%, rgba(245,245,245,0.7) 60%, rgba(245,245,245,1) 81%, rgba(245,245,245,1) 100%);
+/* 	background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(245,245,245,0.7) 60%, rgba(245,245,245,1) 81%, rgba(245,245,245,1) 100%);
+	background: -webkit-linear-gradient(left,  rgba(245,245,245,0) 0%,rgba(245,245,245,0.7) 60%,rgba(245,245,245,1) 81%,rgba(245,245,245,1) 100%); */
 	bottom: 0;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#fff',GradientType=1 );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#f5f5f5',GradientType=1 );
 	height: 100%;
 	position: absolute;
 	right: 0;
