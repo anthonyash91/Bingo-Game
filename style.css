@@ -819,25 +819,25 @@ main#bingo-cards.computer-two-win .confetti-color-six {
 
 
 @font-face {
-font-display: swap;
-font-family: 'MADE Tommy Soft Bold';
-font-style: normal;
-font-weight: bold;
-src: url('fonts/MADETommySoft-Bold.woff') format('woff');
+	font-display: swap;
+	font-family: 'MADE Tommy Soft Bold';
+	font-style: normal;
+	font-weight: bold;
+	src: url('fonts/MADETommySoft-Bold.woff') format('woff');
 }
 
 @font-face {
-font-display: swap;
-font-family: 'Star Things 2';
-font-style: normal;
-font-weight: 100;
-src: url('fonts/Star-Things2.woff') format('woff');
+	font-display: swap;
+	font-family: 'Star Things 2';
+	font-style: normal;
+	font-weight: 100;
+	src: url('fonts/Star-Things2.woff') format('woff');
 }
 
 @font-face {
-font-display: swap;
-font-family: 'MADE Tommy Soft 500';
-font-style: normal;
-font-weight: 500;
-src: url('fonts/MADETommySoft-Medium.woff') format('woff');
+	font-display: swap;
+	font-family: 'MADE Tommy Soft 500';
+	font-style: normal;
+	font-weight: 500;
+	src: url('fonts/MADETommySoft-Medium.woff') format('woff');
 }
