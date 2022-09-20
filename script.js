@@ -1,95 +1,510 @@
-const bingoCards = document.querySelectorAll('.bingo-card'),
-playerCard = document.getElementById('player-card'),
-computerCard = document.getElementById('computer-card'),
-allTiles = document.querySelectorAll('.tile'),
-playerTiles = document.querySelectorAll('#player-card .tile'),
-computerTiles = document.querySelectorAll('#computer-card .tile'),
-freeTiles = document.querySelectorAll('.free-tile'),
-gameTiles = document.querySelectorAll('.game-tiles .tile'),
-names = document.querySelectorAll('.name'),
-playerName = document.querySelector('#player-card .name span'),
-autoMark = document.querySelector('#auto-mark'),
-autoMarkButton = document.querySelector('#auto-mark input'),
-winningNumbersContainer = document.getElementById('winning-numbers'),
-generateCardsButton = document.getElementById('generate-cards'),
-drawANumberButton = document.getElementById('draw-a-number'),
-resetGameButton = document.getElementById('reset-game'),
-blur = document.getElementById('blur'),
-modalOne = document.getElementById('modal-one'),
-modalTwo = document.getElementById('modal-two'),
-getStartedButton = document.getElementById('get-started'),
-nameInput = document.getElementById('enter-your-name'),
-winningNumbersArray = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75']
+const container = document.getElementById('bingo-cards'),
+	computerOneCard = document.getElementById('computer-one'),
+	playerCard = document.getElementById('player'),
+	computerTwoCard = document.getElementById('computer-two'),
+	gameTiles = document.querySelectorAll('.game-tiles .tile'),
+	computerTiles = document.querySelectorAll('.computer-tiles .tile'),
+	playerTiles = document.querySelectorAll('#player .game-tiles .tile'),
+	winningNumbers = document.getElementById('winning-numbers'),
+	winningNumbersContainer = document.getElementById('winning-numbers-container'),
+	triviaQuestion = document.getElementById('random-question'),
+	triviaAnswer = document.getElementById('trivia-answer'),
+	correctAnswer = document.getElementById('correct-answer'),
+	incorrectAnswer = document.getElementById('incorrect-answer'),
+	playerName = document.getElementById('player-name'),
+	blur = document.getElementById('blur'),
+	modalOne = document.getElementById('modal-one'),
+	modalTwo = document.getElementById('modal-two'),
+	enableAutoMarkButton = document.querySelector('.enable'),
+	noThanksButton = document.querySelector('.skip'),
+	getStartedButton = document.getElementById('get-started'),
+	nameInput = document.getElementById('enter-your-name'),
+	cardBlur = document.getElementById('card-blur'),
+	generateCardsButton = document.getElementById('generate-cards'),
+	drawNumberButton = document.getElementById('draw-number'),
+	resetGameButton = document.getElementById('reset-game'),
+	starsDiv = document.querySelector('.stars'),
+	colors = ['confetti-color-one', 'confetti-color-two', 'confetti-color-three', 'confetti-color-four', 'confetti-color-five', 'confetti-color-six'];
 
-let chosenWinningNumbersArray = [],
-chosenNumbersArray = [],
-tileCounter = 0,
-tileCounterTwo = 0,
-autoplay = false,
-playerWins = false,
-computerWins = false,
-loserCounter = 0,
-triviaQuestions = [
-	{question: 'What is the former name of Istanbul?', answer: 'Constantinople'},
-	{question: 'In which year was the first Harry Potter book published?', answer: '1997'},
-	{question: 'The name of which household product is short for "water displacement, formulation successful in 40th attempt"?', answer: 'WD-40'},
-	{question: 'How many sides does a nonagon have?', answer: '9'},
-	{question: 'Off which country does the island of Zanzibar lie?', answer: 'Tanzinia'},
-	{question: 'What type of insect is a weevil?', answer: 'Beetle'},
-	{question: 'Which Disney cartoon character\'s love interest is named Megara?', answer: 'Hercules'},
-	{question: 'Which precious stones are found in the Namib desert in Africa?', answer: 'Diamonds'},
-	{question: 'What astronomical unit of distance equals about 5.88 trillion miles?', answer: 'Lightyear'},
-	{question: 'Which animal\'s name translates as "the lizard" in Spanish?', answer: 'Alligator'},
-	{question: 'Which city contains the most billionaires?', answer: 'Moscow'},
-	{question: 'The Spanish Civil War began in what year?', answer: '1936'},
-	{question: 'What is the capital of the US state of Delaware?', answer: 'Dover'},
-	{question: 'What was U.S. President Wilson\'s first name?', answer: 'Thomas'},
-	{question: 'Which US state is located between California and Utah?', answer: 'Nevada'},
-	{question: 'Machu Picchu is located in what country?', answer: 'Peru'},
-	{question: 'Acarophobia is the fear of what?', answer: 'Insects'},
-	{question: 'A male horse is known as a colt until it reaches what age?', answer: '5'},
-	{question: 'What is Mozart\'s full name?', answer: 'Wolfgang Amadeus Mozart'},
-	{question: 'The "Pentagon Papers" contained secret government information about what?', answer: 'The Vietnam War'},
-	{question: 'Hydraulics is the study of what?', answer: 'Fluids'}
-],
-showQuestion = false,
-currentRandomNumber = [],
-chosenQuestions = [],
-currentQuestion = [];
-
-const startConfetti = document.querySelector(".winner");
-const stopConfetti = document.querySelector(".cancel");
-const starsDiv = document.querySelector('.stars');
-const colors = ['confetti-color-one', 'confetti-color-two'];
-
-const startGame = () => {
-  modalOne.classList.add('hide');
-
-	setTimeout(() => {
-		modalOne.style.opacity = 0;
-		modalOne.style.visibility = 'hidden';
-	}, 600);
-
-	setTimeout(() => {modalTwo.classList.remove('hide');}, 800);
-}
+let winningNumbersArray = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75'];
+let chosenWinningNumbersArray = [];
+let tileCounter = 0;
+let tileCounterTwo = 0;
+let chosenNumbersArray = [];
+let autoplay = false;
+let computerOneWins = false;
+let playerWins = false;
+let computerTwoWins = false;
+let triviaQuestions = [
+	{question: 'What is the former name of Istanbul?', answer: 'Constantinople'}, {question: 'In which year was the first Harry Potter book published?', answer: '1997'}, {question: 'The name of which household product is short for "water displacement, formulation successful in 40th attempt"?', answer: 'WD-40'}, {question: 'How many sides does a nonagon have?', answer: '9'}, {question: 'Off which country does the island of Zanzibar lie?', answer: 'Tanzinia'}, {question: 'What type of insect is a weevil?', answer: 'Beetle'}, {question: 'Which Disney cartoon character\'s love interest is named Megara?', answer: 'Hercules'}, {question: 'Which precious stones are found in the Namib desert in Africa?', answer: 'Diamonds'}, {question: 'What astronomical unit of distance equals about 5.88 trillion miles?', answer: 'Lightyear'}, {question: 'Which animal\'s name translates as "the lizard" in Spanish?', answer: 'Alligator'}, {question: 'Which city contains the most billionaires?', answer: 'Moscow'}, {question: 'The Spanish Civil War began in what year?', answer: '1936'}, {question: 'What is the capital of the US state of Delaware?', answer: 'Dover'}, {question: 'What was U.S. President Wilson\'s first name?', answer: 'Thomas'}, {question: 'Which US state is located between California and Utah?', answer: 'Nevada'}, {question: 'Machu Picchu is located in what country?', answer: 'Peru'}, {question: 'Acarophobia is the fear of what?', answer: 'Insects'}, {question: 'A male horse is known as a colt until it reaches what age?', answer: '5'}, {question: 'What is Mozart\'s full name?', answer: 'Wolfgang Amadeus Mozart'}, {question: 'The "Pentagon Papers" contained secret government information about what?', answer: 'The Vietnam War'}, {question: 'Hydraulics is the study of what?', answer: 'Fluids'}
+];
+let showQuestion = false;
+let currentRandomNumber = [];
+let chosenQuestions = [];
+let currentQuestion = [];
 
 nameInput.addEventListener('keypress', (evt) => {
-	if (evt.key === 'Enter') {
-		evt.preventDefault();
-		
-		bingoCards.forEach(element => {
-			element.classList.add('start');
-		})
-		
-		names.forEach(element => {
-			element.classList.add('show', 'expand');
-		})
+	nameInput.classList.remove('shake');
 
-		setTimeout(() => {document.getElementById('gradient').classList.remove('hide');}, 400);
-		blur.classList.add('hide');
-		playerName.innerText = nameInput.value;
+	if (evt.key === 'Enter') {
+		if(nameInput.value === '') {
+			nameInput.classList.add('shake');
+		} else {
+			modalOne.classList.add('hide');
+
+			setTimeout(() => {
+				modalOne.style.opacity = 0;
+				modalOne.style.visibility = 'hidden';
+			}, 600);
+
+			setTimeout(() => {
+				modalTwo.classList.remove('hide');
+				nameInput.value = '';
+			}, 800);
+
+			playerName.innerText = nameInput.value;
+			setTimeout(() => {playerName.classList.remove('hide');}, 200);
+		}
 	}
 })
+
+enableAutoMarkButton.addEventListener('click', (evt) => {
+	modalTwo.classList.add('animate');
+	setTimeout(() => {
+		modalTwo.style.opacity = 0;
+		modalTwo.style.visibility = 'hidden';
+		blur.classList.add('hide');
+	}, 600);
+	autoplay = true;
+})
+
+noThanksButton.addEventListener('click', (evt) => {
+	modalTwo.classList.add('animate');
+	setTimeout(() => {
+		modalTwo.style.opacity = 0;
+		modalTwo.style.visibility = 'hidden';
+		blur.classList.add('hide');
+	}, 600);
+})
+
+const generateCards = () => {
+	let bingoNumbersArrays = {
+		b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45], g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60], o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
+	}
+
+	const bingoKeys = Object.keys(bingoNumbersArrays);
+
+	gameTiles.forEach((element, i) => {
+		const chooseBingoNumbersArray = bingoNumbersArrays[bingoKeys[tileCounter]];
+		const randomizeBingoNumbers = Math.floor(Math.random() * chooseBingoNumbersArray.length);
+		const chooseRandomBingoNumber = chooseBingoNumbersArray[randomizeBingoNumbers];
+		chosenNumbersArray.push(bingoKeys[tileCounter].toUpperCase() + chooseRandomBingoNumber);
+
+		if(element.classList.contains('free-tile')) {
+			i++
+			setTimeout(() => {element.classList.add('hit');}, 300);
+		} else {
+			const randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
+			element.innerText = chooseRandomBingoNumber;
+			element.setAttribute('data', bingoKeys[tileCounter].toUpperCase() + chooseRandomBingoNumber);
+			element.parentElement.parentElement.classList.add(bingoKeys[tileCounter].toUpperCase() + chooseRandomBingoNumber);
+			setTimeout(() => {element.classList.remove('hide');}, randomFade);
+		}
+
+		tileCounter++
+		tileCounterTwo++
+
+		if(tileCounter === 5) {
+			tileCounter = 0;
+		}
+
+		if(tileCounterTwo === 25) {
+				tileCounterTwo = 0;
+
+				bingoNumbersArrays = {
+					b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45], g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60], o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
+				}
+			}
+
+		chooseBingoNumbersArray.splice(chooseBingoNumbersArray.indexOf(chooseBingoNumbersArray[randomizeBingoNumbers]), 1);
+	})
+	
+	generateCardsButton.classList.add('dim');
+	drawNumberButton.classList.remove('dim');	
+}
+
+const checkForWinners = () => {
+	const computerOneWinningConditions = [
+		// horizontal wins
+		[gameTiles[0],gameTiles[1],gameTiles[2],gameTiles[3],gameTiles[4]],
+		[gameTiles[5],gameTiles[6],gameTiles[7],gameTiles[8],gameTiles[9]],
+		[gameTiles[10],gameTiles[11],gameTiles[12],gameTiles[13],gameTiles[14]],
+		[gameTiles[15],gameTiles[16],gameTiles[17],gameTiles[18],gameTiles[19]],
+		[gameTiles[20],gameTiles[21],gameTiles[22],gameTiles[23],gameTiles[24]],
+		// vertical wins
+		[gameTiles[0],gameTiles[5],gameTiles[10],gameTiles[15],gameTiles[20]],
+		[gameTiles[1],gameTiles[6],gameTiles[11],gameTiles[16],gameTiles[21]],
+		[gameTiles[2],gameTiles[7],gameTiles[12],gameTiles[17],gameTiles[22]],
+		[gameTiles[3],gameTiles[8],gameTiles[13],gameTiles[18],gameTiles[23]],
+		[gameTiles[4],gameTiles[9],gameTiles[14],gameTiles[19],gameTiles[24]],
+		// diagonal wins
+		[gameTiles[0],gameTiles[6],gameTiles[12],gameTiles[18],gameTiles[24]],
+		[gameTiles[4],gameTiles[8],gameTiles[12],gameTiles[16],gameTiles[20]],
+		// four corners win
+		[gameTiles[0],gameTiles[4],gameTiles[12],gameTiles[20],gameTiles[24]]
+	]
+	
+	const playerWinningConditions = [
+		// horizontal wins
+		[gameTiles[25],gameTiles[26],gameTiles[27],gameTiles[28],gameTiles[29]],
+		[gameTiles[30],gameTiles[31],gameTiles[32],gameTiles[33],gameTiles[34]],
+		[gameTiles[35],gameTiles[36],gameTiles[37],gameTiles[38],gameTiles[39]],
+		[gameTiles[40],gameTiles[41],gameTiles[42],gameTiles[43],gameTiles[44]],
+		[gameTiles[45],gameTiles[46],gameTiles[47],gameTiles[48],gameTiles[49]],
+		// vertical wins
+		[gameTiles[25],gameTiles[30],gameTiles[35],gameTiles[40],gameTiles[45]],
+		[gameTiles[26],gameTiles[31],gameTiles[36],gameTiles[41],gameTiles[46]],
+		[gameTiles[27],gameTiles[32],gameTiles[37],gameTiles[42],gameTiles[47]],
+		[gameTiles[28],gameTiles[33],gameTiles[38],gameTiles[43],gameTiles[48]],
+		[gameTiles[29],gameTiles[34],gameTiles[39],gameTiles[44],gameTiles[49]],
+		// diagonal wins
+		[gameTiles[25],gameTiles[31],gameTiles[37],gameTiles[43],gameTiles[49]],
+		[gameTiles[29],gameTiles[33],gameTiles[37],gameTiles[41],gameTiles[45]],
+		// four corners win
+		[gameTiles[25],gameTiles[29],gameTiles[37],gameTiles[45],gameTiles[49]]
+	]
+	
+	const computerTwoWinningConditions = [
+		// horizontal wins
+		[gameTiles[50],gameTiles[51],gameTiles[52],gameTiles[53],gameTiles[54]],
+		[gameTiles[55],gameTiles[56],gameTiles[57],gameTiles[58],gameTiles[59]],
+		[gameTiles[60],gameTiles[61],gameTiles[62],gameTiles[63],gameTiles[64]],
+		[gameTiles[65],gameTiles[66],gameTiles[67],gameTiles[68],gameTiles[69]],
+		[gameTiles[70],gameTiles[71],gameTiles[72],gameTiles[73],gameTiles[74]],
+		// vertical wins
+		[gameTiles[50],gameTiles[55],gameTiles[60],gameTiles[65],gameTiles[70]],
+		[gameTiles[51],gameTiles[56],gameTiles[61],gameTiles[66],gameTiles[71]],
+		[gameTiles[52],gameTiles[57],gameTiles[62],gameTiles[67],gameTiles[72]],
+		[gameTiles[53],gameTiles[58],gameTiles[63],gameTiles[68],gameTiles[73]],
+		[gameTiles[54],gameTiles[59],gameTiles[64],gameTiles[69],gameTiles[74]],
+		// diagonal wins
+		[gameTiles[50],gameTiles[56],gameTiles[62],gameTiles[68],gameTiles[74]],
+		[gameTiles[54],gameTiles[58],gameTiles[62],gameTiles[66],gameTiles[70]],
+		// four corners win
+		[gameTiles[50],gameTiles[54],gameTiles[62],gameTiles[70],gameTiles[74]]
+	]
+
+	for(let i = 0; i < 13; i++) {
+		if(computerOneWinningConditions[i][0].classList.contains('hit') && computerOneWinningConditions[i][1].classList.contains('hit') && computerOneWinningConditions[i][2].classList.contains('hit') && computerOneWinningConditions[i][3].classList.contains('hit') && computerOneWinningConditions[i][4].classList.contains('hit')) {
+			computerOneWinningConditions[i].forEach(element => {
+				element.classList.add('winner');
+			})
+
+			computerOneWins = true;
+		}
+
+		if(playerWinningConditions[i][0].classList.contains('hit') && playerWinningConditions[i][1].classList.contains('hit') && playerWinningConditions[i][2].classList.contains('hit') && playerWinningConditions[i][3].classList.contains('hit') && playerWinningConditions[i][4].classList.contains('hit')) {
+			playerWinningConditions[i].forEach(element => {
+				element.classList.add('winner');
+			})
+
+			playerWins = true;
+		}
+
+		if(computerTwoWinningConditions[i][0].classList.contains('hit') && computerTwoWinningConditions[i][1].classList.contains('hit') && computerTwoWinningConditions[i][2].classList.contains('hit') && computerTwoWinningConditions[i][3].classList.contains('hit') && computerTwoWinningConditions[i][4].classList.contains('hit')) {
+			computerTwoWinningConditions[i].forEach(element => {
+				element.classList.add('winner');
+			})
+
+			computerTwoWins = true;
+		}
+	}
+
+	if(computerOneWins || playerWins || computerTwoWins) {
+		winningNumbersContainer.classList.add('hide');
+		drawNumberButton.classList.add('hide');
+		generateCardsButton.classList.replace('dim', 'hide');
+		setTimeout(() => {resetGameButton.classList.remove('hide');}, 500);
+
+		if(computerOneWins && playerWins && computerTwoWins) {
+			container.classList.add('three-way-tie');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(computerOneWins && playerWins && !computerTwoWins) {
+			container.classList.add('computer-one-and-player-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(computerOneWins && !playerWins && computerTwoWins) {
+			container.classList.add('computer-one-and-computer-two-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(!computerOneWins && playerWins && computerTwoWins) {
+			container.classList.add('player-and-computer-two-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(computerOneWins && !playerWins && !computerTwoWins) {
+			container.classList.add('computer-one-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(!computerOneWins && playerWins && !computerTwoWins) {
+			container.classList.add('player-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		} else if(!computerOneWins && !playerWins && computerTwoWins) {
+			container.classList.add('computer-two-win');
+			setTimeout(() => {confettiCannon();}, 500);
+		}
+	}
+}
+
+const showQuestionNumber = () => {
+	const randomQuestionNum = Math.floor(Math.random() * (1000 - 0 + 1)) + 1;
+	
+	currentRandomNumber = [];
+	currentRandomNumber.push(randomQuestionNum);
+
+	if(randomQuestionNum % 2 === 0) {
+		showQuestion = true; 
+	} else {
+		showQuestion = false;
+	}
+}
+
+const drawNumber = () => {
+	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbersArray.length);
+	const chanceToHitComputerOne = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+	const chanceToHitComputerTwo = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+	const randomWinningNumber = winningNumbersArray[randomizeWinningNumbers];
+	const winningNumber = document.createElement('div');
+	
+	if(chosenWinningNumbersArray.length != 75) {
+		winningNumber.classList.add('winning-number', randomWinningNumber);
+		setTimeout(() => {winningNumber.classList.add('show');}, 200);
+		winningNumber.innerText = randomWinningNumber;
+
+		if(winningNumber.classList.contains(randomWinningNumber) && !computerOneCard.classList.contains(randomWinningNumber) && !playerCard.classList.contains(randomWinningNumber) && !computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('no-match');
+		} else if(winningNumber.classList.contains(randomWinningNumber) && computerOneCard.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('computers-player');
+			showQuestionNumber();
+			if(autoplay && showQuestion) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 500);}
+			if(!autoplay) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 300);}
+		} else if(winningNumber.classList.contains(randomWinningNumber) && computerOneCard.classList.contains(randomWinningNumber) && !playerCard.classList.contains(randomWinningNumber) && !computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('only-computer-one');
+		} else if(winningNumber.classList.contains(randomWinningNumber) && !computerOneCard.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && !computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('only-player');
+			showQuestionNumber();
+			if(autoplay && showQuestion) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 500);}
+			if(!autoplay) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 300);}
+		} else if(winningNumber.classList.contains(randomWinningNumber) && !computerOneCard.classList.contains(randomWinningNumber) && !playerCard.classList.contains(randomWinningNumber) && computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('only-computer-two');
+		} else if(winningNumber.classList.contains(randomWinningNumber) && computerOneCard.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && !computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('computer-one-player');
+			showQuestionNumber();
+			if(autoplay && showQuestion) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 500);}
+			if(!autoplay) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 300);}
+		} else if(winningNumber.classList.contains(randomWinningNumber) && computerOneCard.classList.contains(randomWinningNumber) && !playerCard.classList.contains(randomWinningNumber) && computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('computer-one-computer-two');
+		} else if(winningNumber.classList.contains(randomWinningNumber) && !computerOneCard.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerTwoCard.classList.contains(randomWinningNumber)) {
+			winningNumber.classList.add('player-computer-two');
+			showQuestionNumber();
+			if(autoplay && showQuestion) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 500);}
+			if(!autoplay) {setTimeout(() => {drawNumberButton.classList.add('dim');}, 300);}
+		}
+
+		winningNumbers.prepend(winningNumber);
+		winningNumbersArray.splice(winningNumbersArray.indexOf(winningNumbersArray[randomizeWinningNumbers]), 1);
+		chosenWinningNumbersArray.push(randomWinningNumber);
+	}
+
+	computerTiles.forEach(element => {
+		if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+			if(chanceToHitComputerOne >= 3 && element.classList.contains('computer-one-tile')) {
+				setTimeout(() => {element.classList.add('hit');}, 300);
+			} else if(chanceToHitComputerOne < 3 && element.classList.contains('computer-one-tile')) {
+				const missedHit = document.createElement('div');
+				missedHit.classList.add('computer-one-miss', 'miss', 'hide');
+				missedHit.innerText = 'miss';
+				
+				if(!computerOneWins && !playerWins && !computerTwoWins) {
+					setTimeout(() => {container.appendChild(missedHit);}, 400);
+				};
+				
+				setTimeout(() => {missedHit.classList.replace('hide', 'show');}, 600);
+				setTimeout(() => {missedHit.classList.replace('show', 'hide');}, 1700);
+				setTimeout(() => {missedHit.remove();}, 2000);
+			}
+
+			if(chanceToHitComputerTwo >= 3 && element.classList.contains('computer-two-tile')) {
+				setTimeout(() => {element.classList.add('hit');}, 300);
+			} else if(chanceToHitComputerTwo < 3 && element.classList.contains('computer-two-tile')) {
+				const missedHit = document.createElement('div');
+				missedHit.classList.add('computer-two-miss', 'miss', 'hide');
+				missedHit.innerText = 'miss';
+				
+				if(!computerOneWins && !playerWins && !computerTwoWins) {
+					setTimeout(() => {container.appendChild(missedHit);}, 400);
+				};
+				
+				setTimeout(() => {missedHit.classList.replace('hide', 'show');}, 600);
+				setTimeout(() => {missedHit.classList.replace('show', 'hide');}, 1700);
+				setTimeout(() => {missedHit.remove();}, 2000);
+			}
+		}
+	})
+	
+	if(autoplay) {
+		playerTiles.forEach(element => {
+			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+				if(showQuestion) {
+					const randomizeQuestions = Math.floor(Math.random() * (triviaQuestions.length - 1 + 1)) + 0;
+					const pickQuestion = triviaQuestions[randomizeQuestions];
+ 
+					if(triviaQuestions.length > 0) {
+						currentQuestion = [];
+						chosenQuestions.push(pickQuestion);
+						currentQuestion.push(pickQuestion);
+						setTimeout(() => {cardBlur.classList.replace('hide', 'show');}, 500);
+						triviaQuestion.innerText = pickQuestion.question;
+						triviaQuestions.splice(randomizeQuestions, 1);
+					}
+
+					triviaAnswer.addEventListener('keypress', (evt) => {
+						triviaAnswer.classList.remove('shake');
+						if(evt.key === 'Enter') {
+							if(triviaAnswer.value === '') {
+								triviaAnswer.classList.add('shake');
+							} else {
+								if(triviaAnswer.value.toLowerCase() === currentQuestion[0].answer.toLowerCase()) {
+									cardBlur.classList.replace('show', 'hide');
+									
+									if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+										cardBlur.classList.replace('show', 'hide');
+
+										setTimeout(() => {
+											correctAnswer.classList.remove('hide');
+											playerName.classList.add('hide');
+										}, 200);
+
+										setTimeout(() => {
+											element.classList.add('hit');
+											drawNumberButton.classList.remove('dim');
+										}, 300);
+
+										setTimeout(() => {
+											correctAnswer.classList.add('hide');
+											playerName.classList.remove('hide');
+										}, 800);
+									}
+								} else {
+									cardBlur.classList.replace('show', 'hide');
+
+									setTimeout(() => {
+										incorrectAnswer.classList.remove('hide');
+										playerName.classList.add('hide');
+									}, 200);
+
+									setTimeout(() => {
+										drawNumberButton.classList.remove('dim');
+										element.setAttribute('data', 'lost-tile');
+									}, 300);
+
+									setTimeout(() => {
+										incorrectAnswer.classList.add('hide');
+										playerName.classList.remove('hide');
+									}, 800);
+								}
+
+								setTimeout(() => {triviaAnswer.value = '';}, 400);
+							}
+						}
+					})
+				} else {
+					setTimeout(() => {element.classList.add('hit');}, 300);
+					drawNumberButton.classList.remove('dim');
+				}
+			}
+		})
+	} else {
+		playerTiles.forEach(element => {
+			const getTileAttribute = element.getAttribute('data');
+			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+				element.style.cursor = 'pointer';
+				
+				const showQ = () => {
+					if(showQuestion) {
+							const randomizeQuestions = Math.floor(Math.random() * (triviaQuestions.length - 1 + 1)) + 0;
+							const pickQuestion = triviaQuestions[randomizeQuestions];
+
+							if(triviaQuestions.length > 0) {
+								currentQuestion = [];
+								chosenQuestions.push(pickQuestion);
+								currentQuestion.push(pickQuestion);
+								cardBlur.classList.replace('hide', 'show');
+								triviaQuestion.innerText = pickQuestion.question;
+								triviaQuestions.splice(randomizeQuestions, 1);
+							}
+
+							triviaAnswer.addEventListener('keypress', (evt) => {
+								triviaAnswer.classList.remove('shake');
+								if(evt.key === 'Enter') {
+									if(triviaAnswer.value === '') {
+										triviaAnswer.classList.add('shake');
+									} else {
+										if(triviaAnswer.value.toLowerCase() === currentQuestion[0].answer.toLowerCase()) {
+											cardBlur.classList.replace('show', 'hide');
+
+											if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
+												setTimeout(() => {element.classList.add('hit');}, 300);
+												drawNumberButton.classList.remove('dim');
+
+												setTimeout(() => {
+													correctAnswer.classList.remove('hide');
+													playerName.classList.add('hide');
+												}, 200);
+			
+												setTimeout(() => {
+													correctAnswer.classList.add('hide');
+													playerName.classList.remove('hide');
+												}, 800);
+											}
+
+											element.style.cursor = 'default';
+											element.setAttribute('data', 'won-tile');
+											element.removeEventListener("click", showQ);
+											setTimeout(() => {triviaAnswer.value = '';}, 400);
+										} else {
+											cardBlur.classList.replace('show', 'hide');
+											drawNumberButton.classList.remove('dim');
+											element.setAttribute('data', 'lost-tile');
+											element.style.cursor = 'default';
+											element.removeEventListener("click", showQ);
+										}
+									}
+								}
+							})
+						} else {
+							setTimeout(() => {element.classList.add('hit');}, 100);
+							drawNumberButton.classList.remove('dim');
+							element.style.cursor = 'default';
+							element.removeEventListener("click", showQ);
+						}
+				}
+				
+				element.addEventListener('click', showQ);
+			}
+		})
+	}
+	
+	setTimeout(() => {
+		console.log('check for winners')
+		checkForWinners();
+	}, 400)
+}
+
+
+
+
+generateCardsButton.addEventListener('click', generateCards);
+drawNumberButton.addEventListener('click', drawNumber);
+
+
+
+
 
 const confettiCannon = () => {
 		for(let i = 0; i < 500; i++) {
@@ -137,386 +552,15 @@ const removeConfetti = () => {
 	})
 }
 
-// winning conditions
-const checkForWinners = () => {
-	const playerWinningConditions = [
-		// horizontal
-		[allTiles[5],allTiles[6],allTiles[7],allTiles[8],allTiles[9]],
-		[allTiles[10],allTiles[11],allTiles[12],allTiles[13],allTiles[14]],
-		[allTiles[15],allTiles[16],allTiles[17],allTiles[18],allTiles[19]],
-		[allTiles[20],allTiles[21],allTiles[22],allTiles[23],allTiles[24]],
-		[allTiles[25],allTiles[26],allTiles[27],allTiles[28],allTiles[29]],
-		// four corners
-		[allTiles[5],allTiles[9],allTiles[17],allTiles[25],allTiles[29]],
-		// vertical
-		[allTiles[5],allTiles[10],allTiles[15],allTiles[20],allTiles[25]],
-		[allTiles[6],allTiles[11],allTiles[16],allTiles[21],allTiles[26]],
-		[allTiles[7],allTiles[12],allTiles[17],allTiles[22],allTiles[27]],
-		[allTiles[8],allTiles[13],allTiles[18],allTiles[23],allTiles[28]],
-		[allTiles[9],allTiles[14],allTiles[19],allTiles[24],allTiles[29]],
-		// diagonol
-		[allTiles[5],allTiles[11],allTiles[17],allTiles[23],allTiles[29]],
-		[allTiles[9],allTiles[13],allTiles[17],allTiles[21],allTiles[25]]
-	]
 
-	const computerWinningConditions = [
-		// horizontal
-		[allTiles[35],allTiles[36],allTiles[37],allTiles[38],allTiles[39]],
-		[allTiles[40],allTiles[41],allTiles[42],allTiles[43],allTiles[44]],
-		[allTiles[45],allTiles[46],allTiles[47],allTiles[48],allTiles[49]],
-		[allTiles[50],allTiles[51],allTiles[52],allTiles[53],allTiles[54]],
-		[allTiles[55],allTiles[56],allTiles[57],allTiles[58],allTiles[59]],
-		// four corners
-		[allTiles[35],allTiles[39],allTiles[47],allTiles[55],allTiles[59]],
-		// vertical
-		[allTiles[35],allTiles[40],allTiles[45],allTiles[50],allTiles[55]],
-		[allTiles[36],allTiles[41],allTiles[46],allTiles[51],allTiles[56]],
-		[allTiles[37],allTiles[42],allTiles[47],allTiles[52],allTiles[57]],
-		[allTiles[38],allTiles[43],allTiles[48],allTiles[53],allTiles[58]],
-		[allTiles[39],allTiles[44],allTiles[49],allTiles[54],allTiles[59]],
-		// diagonal
-		[allTiles[35],allTiles[41],allTiles[47],allTiles[53],allTiles[59]],
-		[allTiles[39],allTiles[43],allTiles[47],allTiles[51],allTiles[55]]
-	]
-	
-	for(let i = 0; i < playerWinningConditions.length; i++) {
-		if(playerWinningConditions[i][0].classList.contains('hit') && playerWinningConditions[i][1].classList.contains('hit') && playerWinningConditions[i][2].classList.contains('hit') && playerWinningConditions[i][3].classList.contains('hit') && playerWinningConditions[i][4].classList.contains('hit')) {
-			playerWinningConditions[i].forEach(element => {
-				element.classList.add('winner');
-			})
 
-			playerWins = true;
-		}
-	}
-	
-	for(let i = 0; i < computerWinningConditions.length; i++) {
-		if(computerWinningConditions[i][0].classList.contains('hit') && computerWinningConditions[i][1].classList.contains('hit') && computerWinningConditions[i][2].classList.contains('hit') && computerWinningConditions[i][3].classList.contains('hit') && computerWinningConditions[i][4].classList.contains('hit')) {
-			computerWinningConditions[i].forEach(element => {
-				element.classList.add('winner');
-			})
 
-			computerWins = true;
-		}
-	}
-	
-	if(playerWins || computerWins) {
-		autoMark.classList.add('hide');
-		drawANumberButton.classList.add('hide');
-		setTimeout(() => {resetGameButton.classList.remove('hide');}, 1000);
-		winningNumbersContainer.classList.add('hide');
-		document.getElementById('gradient').classList.add('hide');
-	}
-	
-	if(playerWins && computerWins) {
-	} else if(playerWins && !computerWins) {
-		document.querySelector('#computer-card .name').classList.remove('expand', 'show');
-		playerCard.style.zIndex = 9;
-		playerCard.classList.add('win');
-		computerCard.classList.add('lose');
-		document.querySelector('.stars').classList.add('player-wins');
-		setTimeout(() => {confettiCannon();}, 400);
-	} else if(computerWins && !playerWins) {
-		document.querySelector('#player-card .name').classList.remove('expand', 'show');
-		computerCard.style.zIndex = 9;
-		computerCard.classList.add('win');
-		playerCard.classList.add('lose');
-		document.querySelector('.stars').classList.add('computer-wins');
-		setTimeout(() => {confettiCannon();}, 400);
-	}
-}
 
-const auto = () => {
-  if(autoplay === false) {
-		autoplay = true;
 
-    computerTiles.forEach(element => {
-			if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
-				setTimeout(() => {
-					element.classList.add('hit');
-					checkForWinners();
-				}, 400)
-			}
-		})
 
-		playerTiles.forEach(element => {
-			if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
-				if(showQuestion){
-					// evt.target.classList.add('hit');
-					document.getElementById('blur-card').classList.add('show');
 
-					document.getElementById('question-submit').addEventListener('click', () => {
-						if(document.getElementById('question-input').value === 'too') {
-							if(chosenWinningNumbersArray.includes(element.getAttribute('data'))) {
-								setTimeout(() => {element.classList.add('hit');}, 200);
-							}
 
-							document.getElementById('blur-card').classList.remove('show');
-							// element.setAttribute('data', 'lost-tile');
-							drawANumberButton.classList.remove('dim');
-							showQuestion = false;
-							setTimeout(() => {checkForWinners();}, 300);
-						} else {
-							document.getElementById('blur-card').classList.remove('show');
-							// element.setAttribute('data', 'lost-tile');
-							drawANumberButton.classList.remove('dim');
-							showQuestion = false;
-							checkForWinners();
-						}
-					})
-				} else {
-					element.classList.add('hit');
-					drawANumberButton.classList.remove('dim');
-					showQuestion = false;
-					checkForWinners();
-				}
-			}
-		})
-
-		document.querySelector('#label svg').classList.add('hide');
-		document.querySelector('#label-message').classList.add('hide');
-		checkForWinners();
-	} else {
-		autoplay = false;
-		document.querySelector('#label svg').classList.remove('hide');
-		document.querySelector('#label-message').classList.remove('hide');
-	}
-}
-
-const generate = () => {
-  let bingoNumbers = {
-		b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-		i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-		n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
-		g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60],
-		o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
-	}
-
-	// select the correct array in the bingoNumbers object by using one of the keys (b,i,n,g,o)
-	const bingoLetters = Object.keys(bingoNumbers);
-
-	gameTiles.forEach((element, i) => {
-		// iterate through the correct array in the bingoNumbers object; bingoNumbers = the object; bingoLetters = use the keys inside the bingoNumbers object; tileCounter = the index of the key inside the object (0 = b, 1 = i, 2 = n, 3 = g, 4 = o)
-		const bingoNumbersArray = bingoNumbers[bingoLetters[tileCounter]];
-		// randomize the numbers in the correct array in the bingoNumbers object
-		const randomizeArrayNumbers = Math.floor(Math.random() * bingoNumbersArray.length);
-		// select a random number from the current array in the bingoNumbers object
-		const pickNum = bingoNumbersArray[randomizeArrayNumbers];
-		const randomFade = Math.floor(Math.random() * (530 - 300 + 1)) + 300;
-
-		chosenNumbersArray.push(bingoLetters[tileCounter].toUpperCase() + pickNum);
-		// if the tile being iterated over contains a class of either 'header-square' or 'free-spot', skip it and add 1 to tileCounter
-		element.classList.contains('header-tile') && i++;
-		element.classList.contains('free-tile') && i++;
-		element.classList.replace('show', 'hide');
-	
-		setTimeout(() => {element.classList.replace('hide', 'show');}, randomFade);
-
-		if(!element.classList.contains('header-tile') && !element.classList.contains('free-tile')) {
-			setTimeout(() => {
-				element.innerText = pickNum;
-			}, 200)
-
-			element.setAttribute('data', bingoLetters[tileCounter].toUpperCase() + pickNum);
-			element.parentElement.parentElement.classList.add(bingoLetters[tileCounter].toUpperCase() + pickNum)
-		}
-	
-		setTimeout(() => {
-			freeTiles.forEach(element => {
-				element.classList.add('hit');
-			})
-		}, 400)
-
-		tileCounter++
-		tileCounterTwo++
-
-		if(tileCounter === 5) {
-			tileCounter = 0;
-		}
-		
-		if(tileCounterTwo === 25) {
-			tileCounterTwo = 0;
-
-			bingoNumbers = {
-				b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-				i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-				n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
-				g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60],
-				o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
-			}
-		}
-
-		// remove the number just selected from the current array so it can't be picked again in the next row
-		bingoNumbersArray.splice(bingoNumbersArray.indexOf(bingoNumbersArray[randomizeArrayNumbers]), 1);
-	})
-
-	winningNumbersContainer.classList.remove('hide');
-	generateCardsButton.classList.add('hide');
-	drawANumberButton.classList.remove('hide');
-}
-
-const drawNumber = () => {
-	showQuestion = false;
-	currentRandomNumber = []
-	const randomQuestionNum = Math.floor(Math.random() * (1000 - 0 + 1)) + 1;
-	currentRandomNumber.push(randomQuestionNum);
-
-	if(currentRandomNumber[0] % 2 === 0) {
-		showQuestion = true;
-	} else {
-		showQuestion = false;
-	}
-
-  // choose a random number from the winningNumbers array
-	const randomizeWinningNumbers = Math.floor(Math.random() * winningNumbersArray.length);
-	const randomWinningNumber = winningNumbersArray[randomizeWinningNumbers];
-	const numberSpan = `<span>${randomWinningNumber.charAt(0)}</span>${randomWinningNumber.slice(1)}`;
-	const div = document.createElement('div');
-
-	// display a new number when the "draw a number" button is clicked until all of the winning numbers've been chosen
-	if(chosenWinningNumbersArray.length != 75) {
-		div.classList.add('number', randomWinningNumber);	
-		div.innerHTML = numberSpan;
-
-		if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add("color-one");
-			drawANumberButton.classList.add('dim');
-		} else if(div.classList.contains(randomWinningNumber) && playerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add("color-two");
-			drawANumberButton.classList.add('dim');
-		} else if(div.classList.contains(randomWinningNumber) && computerCard.classList.contains(randomWinningNumber)) {
-			div.classList.add("color-three");
-		} else {
-			div.classList.add("color-four");
-		}
-
-		setTimeout(() => {div.classList.add('show');}, 100);
-
-		winningNumbersContainer.prepend(div);
-		// once a number is picked from the winningNumbers array, remove it from the array so it cannot be picked again
-		winningNumbersArray.splice(winningNumbersArray.indexOf(winningNumbersArray[randomizeWinningNumbers]), 1);
-		// push the number picked from the winningNumbers array to the chosenWinningNumbers array; this is used for reset game purposes
-		chosenWinningNumbersArray.push(randomWinningNumber);
-	}
-
-	// put the same thing in autoplay as you have in not autoplay
-	if(autoplay) {
-		computerTiles.forEach(element => {
-			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-				setTimeout(() => {
-					element.classList.add('hit');
-					checkForWinners();
-				}, 400)
-			}
-		})
-
-		playerTiles.forEach(element => {
-			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-					if(showQuestion){
-						document.getElementById('blur-card').classList.add('show');
-
-						document.getElementById('question-submit').addEventListener('click', () => {
-							if(document.getElementById('question-input').value === 'too') {
-								if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-									setTimeout(() => {element.classList.add('hit');}, 200);
-								}
-
-								document.getElementById('blur-card').classList.remove('show');
-								element.setAttribute('data', 'lost-tile');
-								drawANumberButton.classList.remove('dim');
-								showQuestion = false;
-								setTimeout(() => {checkForWinners();}, 300);
-							} else {
-								document.getElementById('blur-card').classList.remove('show');
-								element.setAttribute('data', 'lost-tile');
-								drawANumberButton.classList.remove('dim');
-								showQuestion = false;
-								checkForWinners();
-							}
-						})
-					} else {
-						drawANumberButton.classList.remove('dim');
-						showQuestion = false;
-						setTimeout(() => {
-							element.classList.add('hit');
-							checkForWinners();
-						}, 400)
-					}
-			}
-		})
-	} 
-	
-	if(!autoplay) {
-		computerTiles.forEach(element => {
-			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-				setTimeout(() => {
-					element.classList.add('hit');
-					checkForWinners();
-				}, 400)
-			}
-		})
-
-		playerTiles.forEach(element => {
-			if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-				element.style.cursor = 'pointer';
-			}
-		})
-
-		playerCard.addEventListener('click', (evt) => {
-			if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-				if(showQuestion){
-					const randomizeQuestions = Math.floor(Math.random() * (triviaQuestions.length - 1 + 1)) + 0;
-					const pickQuestion = triviaQuestions[randomizeQuestions];
- 
-					if(triviaQuestions.length > 0) {
-						currentQuestion = [];
-						chosenQuestions.push(pickQuestion);
-						currentQuestion.push(pickQuestion);
-						document.getElementById('random-question').innerText = pickQuestion.question;
-						triviaQuestions.splice(randomizeQuestions, 1);
-					}
-
-					// evt.target.classList.add('hit');
-					document.getElementById('blur-card').classList.add('show');
-					
-					document.getElementById('question-submit').addEventListener('click', () => {
-						if(document.getElementById('question-input').value.toLowerCase() === currentQuestion[0].answer.toLowerCase()) {
-							if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-								setTimeout(() => {evt.target.classList.add('hit');}, 200);
-								evt.target.setAttribute('data', 'lost-tile');
-							}
-
-							document.getElementById('blur-card').classList.remove('show');
-							drawANumberButton.classList.remove('dim');
-							showQuestion = false;
-							setTimeout(() => {checkForWinners();}, 300);
-						} else {
-							document.getElementById('blur-card').classList.remove('show');
-							if(evt.target.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-								evt.target.setAttribute('data', 'lost-tile');
-							}
-							drawANumberButton.classList.remove('dim');
-							showQuestion = false;
-							checkForWinners();
-						}
-
-						evt.target.style.cursor = 'default';
-					})
-				} else {
-					evt.target.classList.add('hit');
-					evt.target.style.cursor = 'default';
-					drawANumberButton.classList.remove('dim');
-					showQuestion = false;
-					checkForWinners();
-				}
-			}
-		})		
-	}
-
-	console.log(triviaQuestions);
-}
-
-const reset = () => {
-  // push the numbers in the chosenWinningsNumbers array back into the winningNumbers array
+const resetGame = () => {
 	for(let i of chosenWinningNumbersArray) {
 		winningNumbersArray.push(i);
 	}
@@ -525,73 +569,63 @@ const reset = () => {
 		triviaQuestions.push(i);
 	}
 	
-	// remove all the appended numbers from the winning-numbers div
 	setTimeout(() => {
-		while(winningNumbersContainer.firstChild) {
-			winningNumbersContainer.removeChild(winningNumbersContainer.firstChild);
+		while(winningNumbers.firstChild) {
+			winningNumbers.removeChild(winningNumbers.firstChild);
 		}
 	}, 250)
 
 	gameTiles.forEach(element => {
-		element.classList.remove('hit', 'winner');
+		const randomFade = Math.floor(Math.random() * (430 - 300 + 1)) + 300;
 
 		setTimeout(() => {
-			if(!element.classList.contains('header-tile') && !element.classList.contains('free-tile')) {
-				element.innerText = '';
-			}
-		}, 200)
+			element.classList.remove('hit', 'winner');
+		}, 300);
 
 		element.removeAttribute('data');
-
-		if(!element.classList.contains('free-tile')) {
-			element.classList.replace('show', 'hide');
-		}
-
 		element.style.cursor = 'default';
-		element.removeEventListener('click', (evt) => {});
-	})
+		container.classList = '';
+		element.parentElement.parentElement.classList = 'bingo-card';
+		
+		if(!element.classList.contains('free-tile')) {
+			setTimeout(() => {
+				element.classList.add('hide');
+			}, randomFade);
 
-	bingoCards.forEach(element => {
-		element.classList = 'bingo-card';
-		element.classList.add('start');
-		setTimeout(() => {element.removeAttribute('style');}, 400);
+			setTimeout(() => {element.innerText = '';}, 450);
+		}
 	})
-
+	
 	autoplay = false;
-	autoMarkButton.checked = false;
+	tileCounter = 0;
+	tileCounterTwo = 0;
+	computerOneWins = false;
 	playerWins = false;
-	computerWins = false;
-	loserCounter = 0;
+	computerTwoWins = false;
 	showQuestion = false;
 	currentRandomNumber = [];
 	chosenQuestions = [];
 	currentQuestion = [];
-
-	document.querySelector('#label svg').classList.remove('hide');
-	document.querySelector('#label-message').classList.remove('hide');
-	setTimeout(() => {document.getElementById('gradient').classList.remove('hide');}, 400);
-	document.querySelector('#player-card .name').classList.add('expand', 'show');
-	document.querySelector('#computer-card .name').classList.add('expand', 'show');
-
-	computerCard.classList.remove('win', 'lose');
-	playerCard.classList.remove('win', 'lose');
-
-	autoMark.classList.remove('hide');
-	resetGameButton.classList.add('hide');
-	generateCardsButton.classList.remove('hide');
-	drawANumberButton.classList.remove('dim');
+	
 	removeConfetti();
+	setTimeout(() => {
+		generateCardsButton.classList.remove('dim', 'hide');
+		drawNumberButton.classList.replace('hide', 'dim');
+		winningNumbersContainer.classList.remove('hide');
 
-	setTimeout(() => {winningNumbersContainer.classList.remove('hide');}, 300);
+		blur.classList.remove('hide');
+		blur.classList.add('slow');
+		modalOne.removeAttribute('style');
+		modalOne.classList.remove('hide');
+		playerName.innerText = '';
+	}, 600);
 
-	// reset the chosenWinningNumbers array
+	setTimeOut(() => {blur.classList.remove('slow');}, 700);
+
+	resetGameButton.classList.add('hide');
+
 	chosenWinningNumbersArray = [];
 	chosenNumbersArray = [];
 }
 
-// event handlers
-getStartedButton.addEventListener('click', startGame);
-autoMarkButton.addEventListener('click', auto);
-generateCardsButton.addEventListener('click', generate);
-drawANumberButton.addEventListener('click', drawNumber);
-resetGameButton.addEventListener('click', reset);
+resetGameButton.addEventListener('click', resetGame);

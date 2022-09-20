@@ -19,5 +19,5 @@ Each winning number drawn has a specific color combination.
 * Green & Blue - the winning number appears on computer one and the player's cards
 * Green & Pink - the winning number appears on computer one and computer two's cards
 * Blue & Pink - the winning number appears on the player and computer two's cards
-* Green, Blue, Pink, & Gray - the winning number appears on computer one, player, and computer two's cards
-* Gray - the winning number does not appear on none of the cards
+* Green, Blue, Pink, & Gray - the winning number appears on all of the cards
+* Gray - the winning number does not appear on any of the cards
