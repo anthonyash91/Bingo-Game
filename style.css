@@ -657,86 +657,86 @@ footer #winning-numbers-container.hide {
 
 #winning-numbers .winning-number.only-player, .example-winning-tile.p {
 	border-bottom-color: var(--player-secondary);
-  border-left-color: var(--player-primary);
-  border-right-color: var(--player-secondary);
-  border-top-color: var(--player-primary);
-  color: var(--player-secondary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--player-secondary);
+	border-top-color: var(--player-primary);
+	color: var(--player-secondary);
 }
 
 #winning-numbers .winning-number.only-computer-two, .example-winning-tile.c-two {
 	border-bottom-color: var(--computer-two-secondary);
-  border-left-color: var(--computer-two-primary);
-  border-right-color: var(--computer-two-secondary);
-  border-top-color: var(--computer-two-primary);
-  color: var(--computer-two-secondary);
+	border-left-color: var(--computer-two-primary);
+	border-right-color: var(--computer-two-secondary);
+	border-top-color: var(--computer-two-primary);
+	color: var(--computer-two-secondary);
 }
 
 #winning-numbers .winning-number.computer-one-player, .example-winning-tile.c-one-p {
 	background-image: linear-gradient(90deg, var(--computer-one-primary), var(--player-secondary));
-  background-repeat: repeat;
-  background-size: 100%;
-  border-bottom-color: var(--player-primary);
-  border-left-color: var(--computer-one-primary);
-  border-right-color: var(--player-secondary);
-  border-top-color: var(--computer-one-secondary);
-  color: #333;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background-repeat: repeat;
+	background-size: 100%;
+	border-bottom-color: var(--player-primary);
+	border-left-color: var(--computer-one-primary);
+	border-right-color: var(--player-secondary);
+	border-top-color: var(--computer-one-secondary);
+	color: #333;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #winning-numbers .winning-number.computer-one-computer-two, .example-winning-tile.c-one-c-two {
 	background-image: linear-gradient(90deg, var(--computer-one-primary), var(--computer-two-secondary));
-  background-repeat: repeat;
-  background-size: 100%;
-  border-bottom-color: var(--computer-two-primary);
-  border-left-color: var(--computer-one-primary);
-  border-right-color: var(--computer-two-secondary);
-  border-top-color: var(--computer-one-secondary);
-  color: #333;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background-repeat: repeat;
+	background-size: 100%;
+	border-bottom-color: var(--computer-two-primary);
+	border-left-color: var(--computer-one-primary);
+	border-right-color: var(--computer-two-secondary);
+	border-top-color: var(--computer-one-secondary);
+	color: #333;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #winning-numbers .winning-number.player-computer-two, .example-winning-tile.p-c-two {
 	background-image: linear-gradient(90deg, var(--player-primary), var(--computer-two-secondary));
-  background-repeat: repeat;
-  background-size: 100%;
-  border-bottom-color: var(--computer-two-primary);
-  border-left-color: var(--player-primary);
-  border-right-color: var(--computer-two-secondary);
-  border-top-color: var(--player-secondary);
-  color: #333;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background-repeat: repeat;
+	background-size: 100%;
+	border-bottom-color: var(--computer-two-primary);
+	border-left-color: var(--player-primary);
+	border-right-color: var(--computer-two-secondary);
+	border-top-color: var(--player-secondary);
+	color: #333;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #winning-numbers .winning-number.computers-player, .example-winning-tile.all-three {
 	background-image: linear-gradient(90deg, #818181, var(--computer-one-primary));
-  background-repeat: repeat;
-  background-size: 100%;
-  border-bottom-color: var(--computer-two-primary);
-  border-left-color: #818181;
-  border-right-color: var(--computer-one-primary);
-  border-top-color: var(--player-primary);
-  color: #383838;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background-repeat: repeat;
+	background-size: 100%;
+	border-bottom-color: var(--computer-two-primary);
+	border-left-color: #818181;
+	border-right-color: var(--computer-one-primary);
+	border-top-color: var(--player-primary);
+	color: #383838;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #winning-numbers .winning-number.no-match, .example-winning-tile.none {
 	border-bottom-color: #383838;
-  border-left-color: #818181;
-  border-right-color: #383838;
-  border-top-color: #818181;
-  color: #383838;
+	border-left-color: #818181;
+	border-right-color: #383838;
+	border-top-color: #818181;
+	color: #383838;
 }
 
 #gradient {
@@ -757,22 +757,22 @@ footer #winning-numbers-container.hide {
 
 .stars {
 	height: 100px;
-	width: 100px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
 	z-index: 1;
+	width: 100px;
 }
 
 .starzz {
-  border-radius: 2px;
-  left: 50%;
-  margin-left: 0;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+	border-radius: 2px;
+	left: 50%;
+	margin-left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .triangle {
@@ -819,25 +819,25 @@ main#bingo-cards.computer-two-win .confetti-color-six {
 
 
 @font-face {
-  font-family: 'MADE Tommy Soft Bold';
-  src: url('fonts/MADETommySoft-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
+font-display: swap;
+font-family: 'MADE Tommy Soft Bold';
+font-style: normal;
+font-weight: bold;
+src: url('fonts/MADETommySoft-Bold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Star Things 2';
-  src: url('fonts/Star-Things2.woff') format('woff');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
+font-display: swap;
+font-family: 'Star Things 2';
+font-style: normal;
+font-weight: 100;
+src: url('fonts/Star-Things2.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'MADE Tommy Soft 500';
-  src: url('fonts/MADETommySoft-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+font-display: swap;
+font-family: 'MADE Tommy Soft 500';
+font-style: normal;
+font-weight: 500;
+src: url('fonts/MADETommySoft-Medium.woff') format('woff');
 }
