@@ -805,14 +805,7 @@ main#bingo-cards.three-way-tie .confetti-color-six, main#bingo-cards.computer-on
 	background-color: var(--computer-two-primary);
 	border-bottom-color: var(--computer-two-primary)!important;
 }
-main#bingo-cards.three-way-tie .confetti-color-five, 
-main#bingo-cards.computer-one-and-computer-two-win .confetti-color-four, 
-main#bingo-cards.computer-one-and-computer-two-win .confetti-color-six, 
-main#bingo-cards.player-and-computer-two-win .confetti-color-three, 
-main#bingo-cards.player-and-computer-two-win .confetti-color-four, 
-main#bingo-cards.computer-two-win .confetti-color-four, 
-main#bingo-cards.computer-two-win .confetti-color-five, 
-main#bingo-cards.computer-two-win .confetti-color-six {
+main#bingo-cards.three-way-tie .confetti-color-five, main#bingo-cards.computer-one-and-computer-two-win .confetti-color-four, main#bingo-cards.computer-one-and-computer-two-win .confetti-color-six, main#bingo-cards.player-and-computer-two-win .confetti-color-three, main#bingo-cards.player-and-computer-two-win .confetti-color-four, main#bingo-cards.computer-two-win .confetti-color-four, main#bingo-cards.computer-two-win .confetti-color-five, main#bingo-cards.computer-two-win .confetti-color-six {
 	background-color: var(--computer-two-secondary);
 	border-bottom-color: var(--computer-two-secondary)!important;
 }
