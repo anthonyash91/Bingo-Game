@@ -222,8 +222,8 @@ const checkForWinners = () => {
 		setTimeout(() => {resetGameButton.classList.remove('hide');}, 500);
 
 		if(computerOneWins && playerWins && computerTwoWins) {
-		container.classList.add('three-way-tie');
-		setTimeout(() => {confettiCannon();}, 500);
+			container.classList.add('three-way-tie');
+			setTimeout(() => {confettiCannon();}, 500);
 		} else if(computerOneWins && playerWins && !computerTwoWins) {
 			container.classList.add('computer-one-and-player-win');
 			setTimeout(() => {confettiCannon();}, 500);
@@ -248,7 +248,6 @@ const checkForWinners = () => {
 
 const showQuestionNumber = () => {
 	const randomQuestionNum = Math.floor(Math.random() * (1000 - 0 + 1)) + 1;
-	
 	currentRandomNumber = [];
 	currentRandomNumber.push(randomQuestionNum);
 
@@ -491,53 +490,45 @@ const drawNumber = () => {
 	}, 400)
 }
 
-
-
-
 generateCardsButton.addEventListener('click', generateCards);
 drawNumberButton.addEventListener('click', drawNumber);
 
-
-
-
-
 const confettiCannon = () => {
-		for(let i = 0; i < 500; i++) {
-				const star = document.createElement('div');
-				let randomizeColors = Math.floor(Math.random() * colors.length);
-				let starSize = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-				let starPositionOne = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
-				let starPositionTwo = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
-				let starSpeed = Math.floor(Math.random() * (1 - 0.5 + 1)) + 0.5;
-				let borderRadius = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-				let rotate = Math.floor(Math.random() * (360 - 1 + 1)) + 1;
-				let triangleSize = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-				let triangleSizeTwo = triangleSize * 2;
+	for(let i = 0; i < 500; i++) {
+		const star = document.createElement('div');
+		let randomizeColors = Math.floor(Math.random() * colors.length);
+		let starSize = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+		let starPositionOne = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
+		let starPositionTwo = Math.ceil(Math.random() * 1200) * (Math.round(Math.random()) ? 1 : -1);
+		let starSpeed = Math.floor(Math.random() * (1 - 0.5 + 1)) + 0.5;
+		let borderRadius = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+		let rotate = Math.floor(Math.random() * (360 - 1 + 1)) + 1;
+		let triangleSize = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+		let triangleSizeTwo = triangleSize * 2;
+		star.classList.add('starzz', colors[randomizeColors]);
+		star.style.borderRadius = `${borderRadius}px`
+		star.style.transition = `all ${starSpeed}s`;
+		star.style.transform = `rotate(${rotate}deg)`
+		star.style.height = `${starSize}px`;
+		star.style.width = `${starSize}px`;
 
-				star.classList.add('starzz', colors[randomizeColors]);
-				star.style.borderRadius = `${borderRadius}px`
-				star.style.transition = `all ${starSpeed}s`;
-				star.style.transform = `rotate(${rotate}deg)`
-				star.style.height = `${starSize}px`;
-				star.style.width = `${starSize}px`;
+		setTimeout(() => {
+			star.style.marginTop = `${starPositionOne}px`;
+			star.style.marginLeft = `${starPositionTwo}px`;
+			star.style.opacity = 1;
+		}, 100)
 
-				setTimeout(() => {
-					star.style.marginTop = `${starPositionOne}px`;
-					star.style.marginLeft = `${starPositionTwo}px`;
-					star.style.opacity = 1;
-				}, 100)
+		if(i % 5 === 0) {
+			star.classList.add('triangle');
+			star.style.borderRadius = '0px';
+			star.style.backgroundColor = 'transparent';
+			star.style.borderRight = `${triangleSize}px solid transparent`;
+			star.style.borderLeft = `${triangleSize}px solid transparent`;
+			star.style.borderBottom = `${triangleSizeTwo}px solid`;
+		}
 
-				if(i % 5 === 0) {
-					star.classList.add('triangle');
-					star.style.borderRadius = '0px';
-					star.style.backgroundColor = 'transparent';
-					star.style.borderRight = `${triangleSize}px solid transparent`;
-					star.style.borderLeft = `${triangleSize}px solid transparent`;
-					star.style.borderBottom = `${triangleSizeTwo}px solid`;
-				}
-
-				starsDiv.appendChild(star);
-			}
+		starsDiv.appendChild(star);
+	}
 }
 
 const removeConfetti = () => {
@@ -546,14 +537,6 @@ const removeConfetti = () => {
 		setTimeout(() => {element.remove();}, 500);
 	})
 }
-
-
-
-
-
-
-
-
 
 const resetGame = () => {
 	for(let i of chosenWinningNumbersArray) {
@@ -603,11 +586,11 @@ const resetGame = () => {
 	currentQuestion = [];
 	
 	removeConfetti();
+
 	setTimeout(() => {
 		generateCardsButton.classList.remove('dim', 'hide');
 		drawNumberButton.classList.replace('hide', 'dim');
 		winningNumbersContainer.classList.remove('hide');
-
 		blur.classList.remove('hide');
 		blur.classList.add('slow');
 		modalOne.removeAttribute('style');
@@ -616,9 +599,7 @@ const resetGame = () => {
 	}, 600);
 
 	setTimeOut(() => {blur.classList.remove('slow');}, 700);
-
 	resetGameButton.classList.add('hide');
-
 	chosenWinningNumbersArray = [];
 	chosenNumbersArray = [];
 }
