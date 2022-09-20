@@ -649,10 +649,10 @@ footer #winning-numbers-container.hide {
 
 #winning-numbers .winning-number.only-computer-one, .example-winning-tile.c-one {
 	border-bottom-color: var(--computer-one-secondary);
-  border-left-color: var(--computer-one-primary);
-  border-right-color: var(--computer-one-secondary);
-  border-top-color: var(--computer-one-primary);
-  color: var(--computer-one-secondary);
+	border-left-color: var(--computer-one-primary);
+	border-right-color: var(--computer-one-secondary);
+	border-top-color: var(--computer-one-primary);
+	color: var(--computer-one-secondary);
 }
 
 #winning-numbers .winning-number.only-player, .example-winning-tile.p {
