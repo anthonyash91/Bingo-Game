@@ -80,7 +80,7 @@ enableAutoMarkButton.addEventListener('click', (evt) => {
 	autoplay = true;
 })
 
-noThanksButton.addEventListener('click', hideOpeningModals);)
+noThanksButton.addEventListener('click', hideOpeningModals);
 
 const generateCards = () => {
 	let bingoNumbersArrays = {
@@ -383,7 +383,7 @@ const drawNumber = () => {
 										setTimeout(() => {
 											correctAnswer.classList.add('hide');
 											playerName.classList.remove('hide');
-										}, 800);
+										}, 1200);
 									}
 								} else {
 									cardBlur.classList.replace('show', 'hide');
@@ -401,7 +401,7 @@ const drawNumber = () => {
 									setTimeout(() => {
 										incorrectAnswer.classList.add('hide');
 										playerName.classList.remove('hide');
-									}, 800);
+									}, 1200);
 								}
 
 								setTimeout(() => {triviaAnswer.value = '';}, 400);
@@ -455,7 +455,7 @@ const drawNumber = () => {
 												setTimeout(() => {
 													correctAnswer.classList.add('hide');
 													playerName.classList.remove('hide');
-												}, 800);
+												}, 1200);
 											}
 
 											element.style.cursor = 'default';
