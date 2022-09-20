@@ -222,8 +222,8 @@ const checkForWinners = () => {
 		setTimeout(() => {resetGameButton.classList.remove('hide');}, 500);
 
 		if(computerOneWins && playerWins && computerTwoWins) {
-			container.classList.add('three-way-tie');
-			setTimeout(() => {confettiCannon();}, 500);
+		container.classList.add('three-way-tie');
+		setTimeout(() => {confettiCannon();}, 500);
 		} else if(computerOneWins && playerWins && !computerTwoWins) {
 			container.classList.add('computer-one-and-player-win');
 			setTimeout(() => {confettiCannon();}, 500);
