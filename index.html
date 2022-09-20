@@ -1,227 +1,242 @@
-<div id="blur">
-  <div id="modal-one" class="modal">
-    <div id="ways-to-win"><h1>- Ways to win at BINGO -</h1></div>
-  
-  <div class="card card-one">
-    <div class="card-container">
-      <div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  </head>
 
-  <div class="card card-two">
-      <div class="card-container"><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div>
-    </div>
-  </div>
-
-  <div class="card card-three">
-    <div class="card-container">
-      <div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div>
-    </div>
-  </div>
-
-  <div class="card card-four">
-      <div class="card-container"><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div>
-    </div>
-  </div>
-  
-  <div class="label one">Horizontal</div>
-  <div class="label two">Vertical</div>
-  <div class="label three">Four Corners</div>
-  <div class="label four">Diagonal</div>
-  
-    <div id="start">
-      <input type="text" id="enter-your-name" placeholder="Type your name and press Enter" maxlength="25">
-    </div>
-  </div>
-  
-  <div id="modal-two" class="modal hide">
-    <h1>Do you want to enable auto-marking?</h1>
-    When auto-marking is enabled, marking the winning number on your BINGO card will be done automatically.
-
-    <div id="enable-auto">
+  <body>
+    <div id="blur">
+      <div id="modal-one" class="modal">
+        <div id="ways-to-win"><h1>- Ways to win at BINGO -</h1></div>
       
-      <div id="auto-button">
-        <button class="enable">Enable Auto-Marking</button>
-        <button class="skip">No thanks</button>
+      <div class="card card-one">
+        <div class="card-container">
+          <div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div>
+        </div>
+      </div>
+    
+      <div class="card card-two">
+          <div class="card-container"><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div>
+        </div>
+      </div>
+    
+      <div class="card card-three">
+        <div class="card-container">
+          <div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div>
+        </div>
+      </div>
+    
+      <div class="card card-four">
+          <div class="card-container"><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile"></div><div class="example-tile hit"></div>
+        </div>
+      </div>
+      
+      <div class="label one">Horizontal</div>
+      <div class="label two">Vertical</div>
+      <div class="label three">Four Corners</div>
+      <div class="label four">Diagonal</div>
+      
+        <div id="start">
+          <input type="text" id="enter-your-name" placeholder="Type your name and press Enter" maxlength="25">
+        </div>
+      </div>
+      
+      <div id="modal-two" class="modal hide">
+        <h1>Do you want to enable auto-marking?</h1>
+        When auto-marking is enabled, marking the winning number on your BINGO card will be done automatically.
+    
+        <div id="enable-auto">
+          
+          <div id="auto-button">
+            <button class="enable">Enable Auto-Marking</button>
+            <button class="skip">No thanks</button>
+          </div>
+        </div>
+    
+        <!-- <div id="tile-examples">
+          <div class="example-winning-tile c-one">B10</div>
+          <div class="example-winning-tile p">B10</div>
+          <div class="example-winning-tile c-two">B10</div>
+          <div class="example-winning-tile c-one-p">B10</div>
+          <div class="example-winning-tile c-one-c-two">B10</div>
+          <div class="example-winning-tile p-c-two">B10</div>
+          <div class="example-winning-tile all-three">B10</div>
+          <div class="example-winning-tile none">B10</div>
+        </div> -->
       </div>
     </div>
-
-    <!-- <div id="tile-examples">
-      <div class="example-winning-tile c-one">B10</div>
-      <div class="example-winning-tile p">B10</div>
-      <div class="example-winning-tile c-two">B10</div>
-      <div class="example-winning-tile c-one-p">B10</div>
-      <div class="example-winning-tile c-one-c-two">B10</div>
-      <div class="example-winning-tile p-c-two">B10</div>
-      <div class="example-winning-tile all-three">B10</div>
-      <div class="example-winning-tile none">B10</div>
-    </div> -->
-  </div>
-</div>
-
-<main id="bingo-cards">
-        <div class="stars"></div>
     
-        <section id="computer-one" class="bingo-card">
-            <div id="computer-one-name" class="name">
-                <span>Computer One</span>
-            </div><!-- end .name -->
-    
-            <div class="tiles-container header-tiles">
-                <div class="tile">B</div>
-                <div class="tile">I</div>
-                <div class="tile">N</div>
-                <div class="tile">G</div>
-                <div class="tile">O</div>
-            </div><!-- end .header-tiles -->
-    
-            <div class="tiles-container computer-tiles game-tiles">
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-    
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-    
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile free-tile">a</div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-    
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-    
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-                <div class="tile computer-one-tile hide"></div>
-            </div><!-- end .game-tiles -->
-    </section><!-- end #computer-one -->
+    <main id="bingo-cards">
+            <div class="stars"></div>
         
-        <section id="player" class="bingo-card">
-            <div id="card-blur" class="hide">
-                <div id="random-question"></div>
-                <input id="trivia-answer" placeholder="Type and press Enter">
-            </div>
+            <section id="computer-one" class="bingo-card">
+                <div id="computer-one-name" class="name">
+                    <span>Computer One</span>
+                </div><!-- end .name -->
+        
+                <div class="tiles-container header-tiles">
+                    <div class="tile">B</div>
+                    <div class="tile">I</div>
+                    <div class="tile">N</div>
+                    <div class="tile">G</div>
+                    <div class="tile">O</div>
+                </div><!-- end .header-tiles -->
+        
+                <div class="tiles-container computer-tiles game-tiles">
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+        
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+        
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile free-tile">a</div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+        
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+        
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                    <div class="tile computer-one-tile hide"></div>
+                </div><!-- end .game-tiles -->
+        </section><!-- end #computer-one -->
             
-            <div id="computer-one-name" class="name">
-              <span id="incorrect-answer" class="answer-reaction hide">incorrect answer</span>
-              <span id="correct-answer" class="answer-reaction hide">correct answer</span>
-              <span id="player-name" class="hide">Anthony</span>
-            </div><!-- end .name -->
-    
-            <div class="tiles-container header-tiles">
-                <div class="tile">B</div>
-                <div class="tile">I</div>
-                <div class="tile">N</div>
-                <div class="tile">G</div>
-                <div class="tile">O</div>
-            </div><!-- end .header-tiles -->
-    
-            <div class="tiles-container player-tiles game-tiles">
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-    
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-    
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile free-tile">a</div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-    
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-    
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-                <div class="tile player-tile hide"></div>
-            </div><!-- end .game-tiles -->
-        </section><!-- end #player -->
+            <section id="player" class="bingo-card">
+                <div id="card-blur" class="hide">
+                    <div id="random-question"></div>
+                    <input id="trivia-answer" placeholder="Type and press Enter">
+                </div>
+                
+                <div id="computer-one-name" class="name">
+                  <span id="incorrect-answer" class="answer-reaction hide">incorrect answer</span>
+                  <span id="correct-answer" class="answer-reaction hide">correct answer</span>
+                  <span id="player-name" class="hide">Anthony</span>
+                </div><!-- end .name -->
         
-        <section id="computer-two" class="bingo-card">
-            <div id="computer-one-name" class="name">
-                <span>Computer Two</span>
-            </div><!-- end .name -->
-    
-            <div class="tiles-container header-tiles">
-                <div class="tile">B</div>
-                <div class="tile">I</div>
-                <div class="tile">N</div>
-                <div class="tile">G</div>
-                <div class="tile">O</div>
-            </div><!-- end .header-tiles -->
-    
-            <div class="tiles-container computer-tiles game-tiles">
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-    
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-    
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile free-tile">a</div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-    
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-    
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-                <div class="tile computer-two-tile hide"></div>
-            </div><!-- end .game-tiles -->
-        </section><!-- end #computer-two -->
+                <div class="tiles-container header-tiles">
+                    <div class="tile">B</div>
+                    <div class="tile">I</div>
+                    <div class="tile">N</div>
+                    <div class="tile">G</div>
+                    <div class="tile">O</div>
+                </div><!-- end .header-tiles -->
         
-        <footer id="buttons">
-            <div><button id="generate-cards">Generate Cards</button></div>
-            <div>
-                <button id="draw-number" class="dim">Draw a Number</button>
-                <button id="reset-game" class="hide">Reset Game</button>
-            </div>
+                <div class="tiles-container player-tiles game-tiles">
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+        
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+        
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile free-tile">a</div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+        
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+        
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                    <div class="tile player-tile hide"></div>
+                </div><!-- end .game-tiles -->
+            </section><!-- end #player -->
             
-            <div>
-                <div id="winning-numbers-container">
-                    <div id="winning-numbers-overflow">
-                        <div id="winning-numbers"></div>
-                    </div><!-- end #winning-numbers-overflow -->
-    
-                    <div id="gradient"></div>
-                </div><!-- end #winning-numbers -->
-            </div>
-        </footer>
-    </main><!-- end #bingo-cards -->
+            <section id="computer-two" class="bingo-card">
+                <div id="computer-one-name" class="name">
+                    <span>Computer Two</span>
+                </div><!-- end .name -->
+        
+                <div class="tiles-container header-tiles">
+                    <div class="tile">B</div>
+                    <div class="tile">I</div>
+                    <div class="tile">N</div>
+                    <div class="tile">G</div>
+                    <div class="tile">O</div>
+                </div><!-- end .header-tiles -->
+        
+                <div class="tiles-container computer-tiles game-tiles">
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+        
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+        
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile free-tile">a</div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+        
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+        
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                    <div class="tile computer-two-tile hide"></div>
+                </div><!-- end .game-tiles -->
+            </section><!-- end #computer-two -->
+            
+            <footer id="buttons">
+                <div><button id="generate-cards">Generate Cards</button></div>
+                <div>
+                    <button id="draw-number" class="dim">Draw a Number</button>
+                    <button id="reset-game" class="hide">Reset Game</button>
+                </div>
+                
+                <div>
+                    <div id="winning-numbers-container">
+                        <div id="winning-numbers-overflow">
+                            <div id="winning-numbers"></div>
+                        </div><!-- end #winning-numbers-overflow -->
+        
+                        <div id="gradient"></div>
+                    </div><!-- end #winning-numbers -->
+                </div>
+            </footer>
+        </main><!-- end #bingo-cards -->
+  </body>
+</html>
