@@ -783,7 +783,6 @@ footer #winning-numbers-container.hide {
 	width: 0!important;
 }
 
-
 main#bingo-cards.three-way-tie .confetti-color-one, main#bingo-cards.computer-one-and-player-win .confetti-color-one, main#bingo-cards.computer-one-and-computer-two-win .confetti-color-one, main#bingo-cards.computer-one-and-computer-two-win .confetti-color-five, main#bingo-cards.computer-one-win .confetti-color-one, main#bingo-cards.computer-one-win .confetti-color-two, main#bingo-cards.computer-one-win .confetti-color-three {
 	background-color: var(--computer-one-primary);
 	border-bottom-color: var(--computer-one-primary)!important;
@@ -809,7 +808,6 @@ main#bingo-cards.three-way-tie .confetti-color-five, main#bingo-cards.computer-o
 	background-color: var(--computer-two-secondary);
 	border-bottom-color: var(--computer-two-secondary)!important;
 }
-
 
 @font-face {
 	font-display: swap;
