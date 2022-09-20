@@ -1,47 +1,45 @@
 const container = document.getElementById('bingo-cards'),
-	computerOneCard = document.getElementById('computer-one'),
-	playerCard = document.getElementById('player'),
-	computerTwoCard = document.getElementById('computer-two'),
-	gameTiles = document.querySelectorAll('.game-tiles .tile'),
-	computerTiles = document.querySelectorAll('.computer-tiles .tile'),
-	playerTiles = document.querySelectorAll('#player .game-tiles .tile'),
-	winningNumbers = document.getElementById('winning-numbers'),
-	winningNumbersContainer = document.getElementById('winning-numbers-container'),
-	triviaQuestion = document.getElementById('random-question'),
-	triviaAnswer = document.getElementById('trivia-answer'),
-	correctAnswer = document.getElementById('correct-answer'),
-	incorrectAnswer = document.getElementById('incorrect-answer'),
-	playerName = document.getElementById('player-name'),
-	blur = document.getElementById('blur'),
-	modalOne = document.getElementById('modal-one'),
-	modalTwo = document.getElementById('modal-two'),
-	enableAutoMarkButton = document.querySelector('.enable'),
-	noThanksButton = document.querySelector('.skip'),
-	getStartedButton = document.getElementById('get-started'),
-	nameInput = document.getElementById('enter-your-name'),
-	cardBlur = document.getElementById('card-blur'),
-	generateCardsButton = document.getElementById('generate-cards'),
-	drawNumberButton = document.getElementById('draw-number'),
-	resetGameButton = document.getElementById('reset-game'),
-	starsDiv = document.querySelector('.stars'),
-	colors = ['confetti-color-one', 'confetti-color-two', 'confetti-color-three', 'confetti-color-four', 'confetti-color-five', 'confetti-color-six'];
+computerOneCard = document.getElementById('computer-one'),
+playerCard = document.getElementById('player'),
+computerTwoCard = document.getElementById('computer-two'),
+gameTiles = document.querySelectorAll('.game-tiles .tile'),
+computerTiles = document.querySelectorAll('.computer-tiles .tile'),
+playerTiles = document.querySelectorAll('#player .game-tiles .tile'),
+winningNumbers = document.getElementById('winning-numbers'),
+winningNumbersContainer = document.getElementById('winning-numbers-container'),
+triviaQuestion = document.getElementById('random-question'),
+triviaAnswer = document.getElementById('trivia-answer'),
+correctAnswer = document.getElementById('correct-answer'),
+incorrectAnswer = document.getElementById('incorrect-answer'),
+playerName = document.getElementById('player-name'),
+blur = document.getElementById('blur'),
+modalOne = document.getElementById('modal-one'),
+modalTwo = document.getElementById('modal-two'),
+enableAutoMarkButton = document.querySelector('.enable'),
+noThanksButton = document.querySelector('.skip'),
+getStartedButton = document.getElementById('get-started'),
+nameInput = document.getElementById('enter-your-name'),
+cardBlur = document.getElementById('card-blur'),
+generateCardsButton = document.getElementById('generate-cards'),
+drawNumberButton = document.getElementById('draw-number'),
+resetGameButton = document.getElementById('reset-game'),
+starsDiv = document.querySelector('.stars'),
+colors = ['confetti-color-one', 'confetti-color-two', 'confetti-color-three', 'confetti-color-four', 'confetti-color-five', 'confetti-color-six'];
 
-let winningNumbersArray = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75'];
-let chosenWinningNumbersArray = [];
-let tileCounter = 0;
-let tileCounterTwo = 0;
-let chosenNumbersArray = [];
-let autoplay = false;
-let computerOneWins = false;
-let playerWins = false;
-let computerTwoWins = false;
-let triviaQuestions = [
-	{question: 'What is the former name of Istanbul?', answer: 'Constantinople'}, {question: 'In which year was the first Harry Potter book published?', answer: '1997'}, {question: 'The name of which household product is short for "water displacement, formulation successful in 40th attempt"?', answer: 'WD-40'}, {question: 'How many sides does a nonagon have?', answer: '9'}, {question: 'Off which country does the island of Zanzibar lie?', answer: 'Tanzinia'}, {question: 'What type of insect is a weevil?', answer: 'Beetle'}, {question: 'Which Disney cartoon character\'s love interest is named Megara?', answer: 'Hercules'}, {question: 'Which precious stones are found in the Namib desert in Africa?', answer: 'Diamonds'}, {question: 'What astronomical unit of distance equals about 5.88 trillion miles?', answer: 'Lightyear'}, {question: 'Which animal\'s name translates as "the lizard" in Spanish?', answer: 'Alligator'}, {question: 'Which city contains the most billionaires?', answer: 'Moscow'}, {question: 'The Spanish Civil War began in what year?', answer: '1936'}, {question: 'What is the capital of the US state of Delaware?', answer: 'Dover'}, {question: 'What was U.S. President Wilson\'s first name?', answer: 'Thomas'}, {question: 'Which US state is located between California and Utah?', answer: 'Nevada'}, {question: 'Machu Picchu is located in what country?', answer: 'Peru'}, {question: 'Acarophobia is the fear of what?', answer: 'Insects'}, {question: 'A male horse is known as a colt until it reaches what age?', answer: '5'}, {question: 'What is Mozart\'s full name?', answer: 'Wolfgang Amadeus Mozart'}, {question: 'The "Pentagon Papers" contained secret government information about what?', answer: 'The Vietnam War'}, {question: 'Hydraulics is the study of what?', answer: 'Fluids'}
-];
-let showQuestion = false;
-let currentRandomNumber = [];
-let chosenQuestions = [];
-let currentQuestion = [];
+let winningNumbersArray = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25', 'I26', 'I27', 'I28', 'I29', 'I30', 'N31', 'N32', 'N33', 'N34', 'N35', 'N36', 'N37', 'N38', 'N39', 'N40', 'N41', 'N42', 'N43', 'N44', 'N45', 'G46', 'G47', 'G48', 'G49', 'G50', 'G51', 'G52', 'G53', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'O71', 'O72', 'O73', 'O74', 'O75'],
+chosenWinningNumbersArray = [],
+tileCounter = 0,
+tileCounterTwo = 0,
+chosenNumbersArray = [],
+autoplay = false,
+computerOneWins = false,
+playerWins = false,
+computerTwoWins = false,
+triviaQuestions = [{question: 'What is the former name of Istanbul?', answer: 'Constantinople'}, {question: 'In which year was the first Harry Potter book published?', answer: '1997'}, {question: 'The name of which household product is short for "water displacement, formulation successful in 40th attempt"?', answer: 'WD-40'}, {question: 'How many sides does a nonagon have?', answer: '9'}, {question: 'Off which country does the island of Zanzibar lie?', answer: 'Tanzinia'}, {question: 'What type of insect is a weevil?', answer: 'Beetle'}, {question: 'Which Disney cartoon character\'s love interest is named Megara?', answer: 'Hercules'}, {question: 'Which precious stones are found in the Namib desert in Africa?', answer: 'Diamonds'}, {question: 'What astronomical unit of distance equals about 5.88 trillion miles?', answer: 'Lightyear'}, {question: 'Which animal\'s name translates as "the lizard" in Spanish?', answer: 'Alligator'}, {question: 'Which city contains the most billionaires?', answer: 'Moscow'}, {question: 'The Spanish Civil War began in what year?', answer: '1936'}, {question: 'What is the capital of the US state of Delaware?', answer: 'Dover'}, {question: 'What was U.S. President Wilson\'s first name?', answer: 'Thomas'}, {question: 'Which US state is located between California and Utah?', answer: 'Nevada'}, {question: 'Machu Picchu is located in what country?', answer: 'Peru'}, {question: 'Acarophobia is the fear of what?', answer: 'Insects'}, {question: 'A male horse is known as a colt until it reaches what age?', answer: '5'}, {question: 'What is Mozart\'s full name?', answer: 'Wolfgang Amadeus Mozart'}, {question: 'The "Pentagon Papers" contained secret government information about what?', answer: 'The Vietnam War'}, {question: 'Hydraulics is the study of what?', answer: 'Fluids'}],
+showQuestion = false,
+currentRandomNumber = [],
+chosenQuestions = [],
+currentQuestion = [];
 
 nameInput.addEventListener('keypress', (evt) => {
 	nameInput.classList.remove('shake');
@@ -68,24 +66,21 @@ nameInput.addEventListener('keypress', (evt) => {
 	}
 })
 
-enableAutoMarkButton.addEventListener('click', (evt) => {
+const hideOpeningModals = () => {
 	modalTwo.classList.add('animate');
 	setTimeout(() => {
 		modalTwo.style.opacity = 0;
 		modalTwo.style.visibility = 'hidden';
 		blur.classList.add('hide');
 	}, 600);
+}
+
+enableAutoMarkButton.addEventListener('click', (evt) => {
+	hideOpeningModals();
 	autoplay = true;
 })
 
-noThanksButton.addEventListener('click', (evt) => {
-	modalTwo.classList.add('animate');
-	setTimeout(() => {
-		modalTwo.style.opacity = 0;
-		modalTwo.style.visibility = 'hidden';
-		blur.classList.add('hide');
-	}, 600);
-})
+noThanksButton.addEventListener('click', hideOpeningModals);)
 
 const generateCards = () => {
 	let bingoNumbersArrays = {
