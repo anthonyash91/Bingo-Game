@@ -126,7 +126,11 @@ const generateCards = () => {
 				tileCounterTwo = 0;
 
 				bingoNumbersArrays = {
-					b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45], g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60], o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
+					b: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 
+					i: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], 
+					n: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45], 
+					g: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60], 
+					o: [61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]
 				}
 			}
 
@@ -318,7 +322,10 @@ const drawNumber = () => {
 	computerTiles.forEach(element => {
 		if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
 			if(chanceToHitComputerOne >= 3 && element.classList.contains('computer-one-tile')) {
-				setTimeout(() => {element.classList.add('hit');}, 300);
+				setTimeout(() => {
+					element.classList.add('hit');
+					checkForWinners();
+				}, 300);
 			} else if(chanceToHitComputerOne < 3 && element.classList.contains('computer-one-tile')) {
 				const missedHit = document.createElement('div');
 				missedHit.classList.add('computer-one-miss', 'miss', 'hide');
@@ -334,7 +341,10 @@ const drawNumber = () => {
 			}
 
 			if(chanceToHitComputerTwo >= 3 && element.classList.contains('computer-two-tile')) {
-				setTimeout(() => {element.classList.add('hit');}, 300);
+				setTimeout(() => {
+					element.classList.add('hit');
+					checkForWinners();
+				}, 300);
 			} else if(chanceToHitComputerTwo < 3 && element.classList.contains('computer-two-tile')) {
 				const missedHit = document.createElement('div');
 				missedHit.classList.add('computer-two-miss', 'miss', 'hide');
@@ -387,6 +397,7 @@ const drawNumber = () => {
 										setTimeout(() => {
 											element.classList.add('hit');
 											drawNumberButton.classList.remove('dim');
+											checkForWinners();
 										}, 300);
 
 										setTimeout(() => {
@@ -418,7 +429,10 @@ const drawNumber = () => {
 						}
 					})
 				} else {
-					setTimeout(() => {element.classList.add('hit');}, 300);
+					setTimeout(() => {
+						element.classList.add('hit');
+						checkForWinners();
+					}, 300);
 					drawNumberButton.classList.remove('dim');
 				}
 			}
@@ -453,7 +467,10 @@ const drawNumber = () => {
 											cardBlur.classList.replace('show', 'hide');
 
 											if(element.getAttribute('data') === randomWinningNumber && chosenWinningNumbersArray.includes(randomWinningNumber)) {
-												setTimeout(() => {element.classList.add('hit');}, 300);
+												setTimeout(() => {
+													element.classList.add('hit');
+													checkForWinners();
+												}, 300);
 												drawNumberButton.classList.remove('dim');
 
 												setTimeout(() => {
@@ -482,7 +499,10 @@ const drawNumber = () => {
 								}
 							})
 						} else {
-							setTimeout(() => {element.classList.add('hit');}, 100);
+							setTimeout(() => {
+								element.classList.add('hit');
+								checkForWinners();
+							}, 100);
 							drawNumberButton.classList.remove('dim');
 							element.style.cursor = 'default';
 							element.removeEventListener("click", showQ);
@@ -493,11 +513,6 @@ const drawNumber = () => {
 			}
 		})
 	}
-	
-	setTimeout(() => {
-		console.log('check for winners')
-		checkForWinners();
-	}, 400)
 }
 
 generateCardsButton.addEventListener('click', generateCards);
