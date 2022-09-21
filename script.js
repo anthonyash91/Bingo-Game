@@ -261,7 +261,7 @@ const showQuestionNumber = () => {
 	currentRandomNumber = [];
 	currentRandomNumber.push(randomQuestionNum);
 
-	if(randomQuestionNum % 2 === 0) {
+	if(randomQuestionNum % 3 === 0) {
 		showQuestion = true; 
 	} else {
 		showQuestion = false;
