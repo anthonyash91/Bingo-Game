@@ -236,26 +236,21 @@ const checkForWinners = () => {
 
 		if(computerOneWins && playerWins && computerTwoWins) {
 			container.classList.add('three-way-tie');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(computerOneWins && playerWins && !computerTwoWins) {
 			container.classList.add('computer-one-and-player-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(computerOneWins && !playerWins && computerTwoWins) {
 			container.classList.add('computer-one-and-computer-two-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(!computerOneWins && playerWins && computerTwoWins) {
 			container.classList.add('player-and-computer-two-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(computerOneWins && !playerWins && !computerTwoWins) {
 			container.classList.add('computer-one-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(!computerOneWins && playerWins && !computerTwoWins) {
 			container.classList.add('player-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		} else if(!computerOneWins && !playerWins && computerTwoWins) {
 			container.classList.add('computer-two-win');
-			setTimeout(() => {confettiCannon();}, 500);
 		}
+
+		setTimeout(() => {confettiCannon();}, 500);
 	}
 }
 
